@@ -1,0 +1,7 @@
+{
+  "docusaurus-lyra-search-plugin.searchBar.placeholder": "Search...",
+  "docusaurus-lyra-search-plugin.searchBar.noResults": "No results found.",
+  "docusaurus-lyra-search-plugin.searchBar.clearButtonTitle": "Clear",
+  "docusaurus-lyra-search-plugin.searchBar.detachedCancelButtonText": "Cancel",
+  "docusaurus-lyra-search-plugin.searchBar.submitButtonTitle": "Submit"
+}

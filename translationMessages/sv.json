@@ -1,0 +1,7 @@
+{
+  "docusaurus-lyra-search-plugin.searchBar.placeholder": "Sök...",
+  "docusaurus-lyra-search-plugin.searchBar.noResults": "Hittade inga resultat.",
+  "docusaurus-lyra-search-plugin.searchBar.clearButtonTitle": "Ta bort",
+  "docusaurus-lyra-search-plugin.searchBar.detachedCancelButtonText": "Avbryt",
+  "docusaurus-lyra-search-plugin.searchBar.submitButtonTitle": "Skicka"
+}
