@@ -1,5 +1,5 @@
-import path from 'path'
-import fs from 'fs'
+const path = require('path')
+const fs = require('fs')
 
 function codeTranslationLocalesToTry(locale) {
   const intlLocale = new Intl.Locale(locale)
@@ -17,7 +17,7 @@ const retrieveObjectContent = async filePath => {
   return JSON.parse(fileContent)
 }
 
-export const retrieveTranslationMessages = async docusaurusContext => {
+const retrieveTranslationMessages = async docusaurusContext => {
   const translationsDir = path.resolve(
     __dirname,
     '..',
@@ -35,4 +35,8 @@ export const retrieveTranslationMessages = async docusaurusContext => {
   return existingLocalePath
     ? retrieveObjectContent(existingLocalePath)
     : Promise.resolve({})
+}
+
+module.exports = {
+  retrieveTranslationMessages
 }

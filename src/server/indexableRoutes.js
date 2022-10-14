@@ -1,4 +1,4 @@
-import path from 'path'
+const path = require('path')
 
 const trimLeadingSlash = path => {
   if (!path || !path.startsWith('/')) {
@@ -67,7 +67,7 @@ const managePagesBlog = (pagesPlugins, route, url) => {
   return manageDocs(pagesPlugins, route, url, isDocusaurusPage, 'page')
 }
 
-export const retrieveIndexableRoutes =
+const retrieveIndexableRoutes =
   (
     baseUrl,
     { docsPlugins, blogPlugins, pagesPlugins },
@@ -95,7 +95,7 @@ export const retrieveIndexableRoutes =
     return []
   }
 
-export const mapRouteToIndex =
+const mapRouteToIndex =
   (trailingSlash, outDir) =>
   ({ route, url, type }) => {
     const file = !trailingSlash
@@ -107,3 +107,8 @@ export const mapRouteToIndex =
       type
     }
   }
+
+module.exports = {
+  retrieveIndexableRoutes,
+  mapRouteToIndex
+}

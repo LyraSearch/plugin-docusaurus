@@ -1,7 +1,5 @@
-import pino from 'pino'
+const pino = require('pino')
 
-import { name } from '../../package.json'
+const logger = pino({ name: 'docusaurus-lyra-search-plugin' })
 
-const logger = pino({ name })
-
-export default logger
+module.exports = logger

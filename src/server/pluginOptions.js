@@ -1,4 +1,4 @@
-import { Joi } from '@docusaurus/utils-validation'
+const { Joi } = require('@docusaurus/utils-validation')
 
 // https://lyrajs.io/docs/usage/creating-a-new-lyra-instance
 const languageSchema = Joi.string().valid(
@@ -14,6 +14,7 @@ const languageSchema = Joi.string().valid(
 )
 
 const pluginOptionsSchema = Joi.object({
+  id: Joi.string(),
   indexDocs: Joi.boolean().default(true),
   indexDocSidebarParentCategories: Joi.number()
     .integer()
@@ -29,9 +30,13 @@ const pluginOptionsSchema = Joi.object({
   maxSearchResults: Joi.number().integer().min(1).default(8)
 })
 
-export const validateOptions = options => {
+const validateOptions = options => {
   const validationResult = pluginOptionsSchema.validate(options)
   if (validationResult.error) {
-    throw new Error(`Invalid plugin options: ${validationResult.error}`)
+    throw new Error(`Invalid plugin options: ${validationResult.error.message}`)
   }
+}
+
+module.exports = {
+  validateOptions
 }

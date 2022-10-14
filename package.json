@@ -2,8 +2,7 @@
   "name": "@lyra/docusaurus-lyra-search-plugin",
   "version": "1.0.0",
   "description": "Template to start a new repository on the bench",
-  "main": "lib/server/index.js",
-  "type": "module",
+  "main": "src/server/index.js",
   "scripts": {
     "lint": "eslint .",
     "build": "vite build",

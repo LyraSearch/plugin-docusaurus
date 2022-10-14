@@ -11,7 +11,7 @@ const docsPluginsReducer = buildPluginObject('docusaurus-plugin-content-docs')
 const blogPluginsReducer = buildPluginObject('docusaurus-plugin-content-blog')
 const pagesPluginsReducer = buildPluginObject('docusaurus-plugin-content-pages')
 
-export const retrieveDocusaurusPluginsContent = plugins => {
+const retrieveDocusaurusPluginsContent = plugins => {
   return {
     docsPlugins: docsPluginsReducer(plugins),
     blogPlugins: blogPluginsReducer(plugins),
@@ -19,7 +19,7 @@ export const retrieveDocusaurusPluginsContent = plugins => {
   }
 }
 
-export const assertIndexContent = (
+const assertIndexContent = (
   { indexDocs, indexBlog, indexPages },
   { docsPlugins, blogPlugins, pagesPlugins }
 ) => {
@@ -38,4 +38,9 @@ export const assertIndexContent = (
       'The "indexPages" option is enabled but no pages plugin has been found.'
     )
   }
+}
+
+module.exports = {
+  retrieveDocusaurusPluginsContent,
+  assertIndexContent
 }

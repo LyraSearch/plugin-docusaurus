@@ -126,7 +126,8 @@ const config = {
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme
       }
-    })
+    }),
+  plugins: [[require('path').join(__dirname, '..'), { indexPages: true }]]
 }
 
 module.exports = config

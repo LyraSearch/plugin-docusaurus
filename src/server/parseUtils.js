@@ -1,5 +1,6 @@
-import * as cheerio from 'cheerio'
-import logger from './logger'
+const cheerio = require('cheerio')
+
+const logger = require('./logger')
 
 const BLOCK_TAGS = [
   'address',
@@ -200,7 +201,7 @@ const manageDocsOrBlogType = (cheerioInstance, type) => {
   return { pageTitle, sections, docSidebarParentCategories }
 }
 
-export const html2text = (html, type, url = '?') => {
+const html2text = (html, type, url = '?') => {
   const cheerioInstance = cheerio.load(html)
   // Remove copy buttons from code boxes
   cheerioInstance(COPY_BUTTOINS_SELECTOR).remove()
@@ -223,9 +224,14 @@ const assertTagPresence = tag => {
   }
 }
 
-export const getDocusaurusTag = html => {
+const getDocusaurusTag = html => {
   const $ = cheerio.load(html)
   const tag = $('meta[name="docusaurus_tag"]').attr('content')
   assertTagPresence(tag)
   return tag
+}
+
+module.exports = {
+  html2text,
+  getDocusaurusTag
 }

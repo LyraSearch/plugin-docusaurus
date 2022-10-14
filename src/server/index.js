@@ -1,16 +1,18 @@
-import path from 'path'
-import { readFile, writeFile } from 'fs/promises'
+const path = require('path')
+const { readFile, writeFile } = require('fs/promises')
 
-import { validateOptions } from './pluginOptions'
-import { name } from '../../package.json'
-import logger from './logger'
-import {
+const { validateOptions } = require('./pluginOptions')
+const logger = require('./logger')
+const {
   retrieveDocusaurusPluginsContent,
   assertIndexContent
-} from './docusaurusPluginsContent'
-import { retrieveTranslationMessages } from './translationMessages'
-import { retrieveIndexableRoutes, mapRouteToIndex } from './indexableRoutes'
-import { html2text, getDocusaurusTag } from './parseUtils'
+} = require('./docusaurusPluginsContent')
+const { retrieveTranslationMessages } = require('./translationMessages')
+const {
+  retrieveIndexableRoutes,
+  mapRouteToIndex
+} = require('./indexableRoutes')
+const { html2text, getDocusaurusTag } = require('./parseUtils')
 
 const generateReadPromises = async ({ file, url, type }) => {
   logger.debug(`Parsing ${type} file ${file}`, { url })
@@ -47,7 +49,7 @@ const docusaurusLyraSearchPlugin = (docusaurusContext, pluginOptions) => {
   } = pluginOptions
 
   return {
-    name,
+    name: 'docusaurus-lyra-search-plugin',
     getThemePath() {
       return path.resolve(__dirname, '..', 'client', 'theme')
     },
@@ -93,4 +95,4 @@ const docusaurusLyraSearchPlugin = (docusaurusContext, pluginOptions) => {
   }
 }
 
-export default docusaurusLyraSearchPlugin
+module.exports = docusaurusLyraSearchPlugin
