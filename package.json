@@ -1,5 +1,5 @@
 {
-  "name": "@lyra/docusaurus-lyra-search-plugin",
+  "name": "@lyrasearch/docusaurus-lyra-search-plugin",
   "version": "1.0.0",
   "description": "Template to start a new repository on the bench",
   "main": "src/server/index.js",
@@ -42,8 +42,8 @@
     "@docusaurus/types": "^2.1.0",
     "eslint": "^8.25.0",
     "eslint-config-prettier": "^8.5.0",
-    "eslint-plugin-prettier": "^4.2.1",
     "eslint-config-react-app": "^7.0.1",
+    "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.31.8",
     "husky": "^8.0.1",
     "lint-staged": "^13.0.3",
@@ -56,6 +56,7 @@
     "*.{js,jsx}": "eslint --cache --fix"
   },
   "dependencies": {
+    "@lyrasearch/lyra": "^0.2.6",
     "cheerio": "^1.0.0-rc.12",
     "pino": "^8.6.1"
   },

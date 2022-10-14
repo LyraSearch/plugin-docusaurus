@@ -1,12 +1,14 @@
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext'
-import useFetchIndex from './hooks/useFetchIndex'
+import useLyra from './hooks/useLyra'
 
 const SearchBar = () => {
   const { siteConfig } = useDocusaurusContext()
 
-  const { index, isLoading } = useFetchIndex(siteConfig)
+  const { lyraDb, isLoading } = useLyra(siteConfig)
 
-  console.log(index, isLoading)
+  console.log(lyraDb, isLoading)
+
+  return 'Here will be placed the search bar'
 }
 
 export default SearchBar

@@ -74,7 +74,6 @@ const retrieveIndexableRoutes =
     { indexDocs, indexBlog, indexPages }
   ) =>
   url => {
-    // baseUrl includes the language prefix, thus `route` will be language-agnostic.
     assertBaseUrl(url, baseUrl)
 
     const route = url.substring(baseUrl.length)
