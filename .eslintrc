@@ -1,5 +1,5 @@
 {
-  "extends": ["eslint:recommended", "plugin:prettier/recommended"],
+  "extends": ["eslint:recommended", "plugin:prettier/recommended", "plugin:react/recommended", "plugin:react/jsx-runtime", "react-app"],
   "env": {
     "node": true,
     "es2021": true
@@ -7,5 +7,8 @@
   "parserOptions": {
     "ecmaVersion": 2021,
     "sourceType": "module"
+  },
+  "rules": {
+    "react/prop-types": 0
   }
 }
