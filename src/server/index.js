@@ -1,4 +1,4 @@
-const path = require('path')
+const { join, resolve } = require('path')
 const { readFile, writeFile } = require('fs/promises')
 
 const { validateOptions } = require('./pluginOptions')
@@ -51,7 +51,7 @@ const docusaurusLyraSearchPlugin = (docusaurusContext, pluginOptions) => {
   return {
     name: 'docusaurus-lyra-search-plugin',
     getThemePath() {
-      return path.resolve(__dirname, '..', 'client', 'theme')
+      return resolve(__dirname, '..', 'client', 'theme')
     },
     getTypeScriptThemePath() {
       return undefined
@@ -66,13 +66,7 @@ const docusaurusLyraSearchPlugin = (docusaurusContext, pluginOptions) => {
       }
       setGlobalData({ data })
     },
-    async postBuild({
-      routesPaths = [],
-      outDir,
-      baseUrl,
-      siteConfig: { trailingSlash },
-      plugins
-    }) {
+    async postBuild({ routesPaths = [], outDir, baseUrl, plugins }) {
       logger.info('Retrieving documents')
 
       const indexFlags = { indexDocs, indexBlog, indexPages }
@@ -82,7 +76,7 @@ const docusaurusLyraSearchPlugin = (docusaurusContext, pluginOptions) => {
 
       const data = routesPaths
         .flatMap(retrieveIndexableRoutes(baseUrl, pluginsContent, indexFlags))
-        .map(mapRouteToIndex(trailingSlash, outDir))
+        .map(mapRouteToIndex(outDir))
 
       logger.info('Documents retrieved, started index build...')
 
@@ -90,7 +84,10 @@ const docusaurusLyraSearchPlugin = (docusaurusContext, pluginOptions) => {
         await Promise.all(data.map(generateReadPromises))
       ).flat()
 
-      await writeFile('./test.json', JSON.stringify(documents))
+      await writeFile(
+        join(outDir, 'lyra-search-index.json'),
+        JSON.stringify(documents)
+      )
     }
   }
 }

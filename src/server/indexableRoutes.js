@@ -38,7 +38,7 @@ const isDebugOrSelfPage = (route, basePath, tagsPath) =>
   route === basePath || isDebugPluginPage(route, basePath, tagsPath)
 
 const manageDocs = (plugins, route, url, skipRouteFunction, type) => {
-  for (const plugin of plugins.values()) {
+  for (const plugin of Object.values(plugins)) {
     const basePath = trimTrailingSlash(plugin.options.routeBasePath)
     const tagsPath = plugin.options.tagsBasePath
 
@@ -55,17 +55,14 @@ const manageDocs = (plugins, route, url, skipRouteFunction, type) => {
   }
 }
 
-const manageIndexDocs = (docsPlugins, route, url) => {
-  return manageDocs(docsPlugins, route, url, isDebugPluginPage, 'docs')
-}
+const manageIndexDocs = (docsPlugins, route, url) =>
+  manageDocs(docsPlugins, route, url, isDebugPluginPage, 'docs')
 
-const manageIndexBlog = (blogPlugins, route, url) => {
-  return manageDocs(blogPlugins, route, url, isDebugOrSelfPage, 'blog')
-}
+const manageIndexBlog = (blogPlugins, route, url) =>
+  manageDocs(blogPlugins, route, url, isDebugOrSelfPage, 'blog')
 
-const manageIndexPages = (pagesPlugins, route, url) => {
-  return manageDocs(pagesPlugins, route, url, isDocusaurusPage, 'page')
-}
+const manageIndexPages = (pagesPlugins, route, url) =>
+  manageDocs(pagesPlugins, route, url, isDocusaurusPage, 'page')
 
 const retrieveIndexableRoutes =
   (
@@ -82,24 +79,25 @@ const retrieveIndexableRoutes =
       return []
     }
     if (indexDocs) {
-      return manageIndexDocs(docsPlugins, route, url)
+      const managedDoc = manageIndexDocs(docsPlugins, route, url)
+      if (managedDoc) return managedDoc
     }
     if (indexBlog) {
-      return manageIndexBlog(blogPlugins, route, url)
+      const managedBlog = manageIndexBlog(blogPlugins, route, url)
+      if (managedBlog) return managedBlog
     }
     if (indexPages) {
-      return manageIndexPages(pagesPlugins, route, url)
+      const managedPage = manageIndexPages(pagesPlugins, route, url)
+      if (managedPage) return managedPage
     }
 
     return []
   }
 
 const mapRouteToIndex =
-  (trailingSlash, outDir) =>
+  outDir =>
   ({ route, url, type }) => {
-    const file = !trailingSlash
-      ? path.join(outDir, `${route || 'index'}.html`)
-      : path.join(outDir, route, 'index.html')
+    const file = path.join(outDir, route, 'index.html')
     return {
       file,
       url,
