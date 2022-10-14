@@ -80,13 +80,13 @@ const docusaurusLyraSearchPlugin = (docusaurusContext, pluginOptions) => {
 
       logger.info('Documents retrieved, started index build...')
 
-      const documents = (
+      const indexContent = (
         await Promise.all(data.map(generateReadPromises))
       ).flat()
 
       await writeFile(
         join(outDir, 'lyra-search-index.json'),
-        JSON.stringify(documents)
+        JSON.stringify(indexContent)
       )
     }
   }
