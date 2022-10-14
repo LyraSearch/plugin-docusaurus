@@ -68,7 +68,7 @@ function _getText($, el) {
     return ''
   } else {
     logger.warn(
-      `Received an unknown element while extracting content from HTML files. This should never happen. Please open an issue at https://github.com/cmfcmf/docusaurus-search-local/issues if you see this message (debug: got type ${el.type}).`
+      'Received an unknown element while extracting content from HTML files.'
     )
     return ''
   }

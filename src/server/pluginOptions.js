@@ -18,6 +18,7 @@ const validateOptions = options => {
   if (validationResult.error) {
     throw new Error(`Invalid plugin options: ${validationResult.error.message}`)
   }
+  return validationResult.value
 }
 
 module.exports = {

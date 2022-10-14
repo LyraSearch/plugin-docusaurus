@@ -63,7 +63,7 @@ const manageIndexBlog = (blogPlugins, route, url) => {
   return manageDocs(blogPlugins, route, url, isDebugOrSelfPage, 'blog')
 }
 
-const managePagesBlog = (pagesPlugins, route, url) => {
+const manageIndexPages = (pagesPlugins, route, url) => {
   return manageDocs(pagesPlugins, route, url, isDocusaurusPage, 'page')
 }
 
@@ -88,7 +88,7 @@ const retrieveIndexableRoutes =
       return manageIndexBlog(blogPlugins, route, url)
     }
     if (indexPages) {
-      return managePagesBlog(pagesPlugins, route, url)
+      return manageIndexPages(pagesPlugins, route, url)
     }
 
     return []

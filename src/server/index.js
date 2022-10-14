@@ -38,7 +38,7 @@ const generateReadPromises = async ({ file, url, type }) => {
 }
 
 const docusaurusLyraSearchPlugin = (docusaurusContext, pluginOptions) => {
-  validateOptions(pluginOptions)
+  pluginOptions = validateOptions(pluginOptions)
 
   const {
     indexDocs,
