@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "lint": "eslint .",
+    "build": "vite build",
     "test": "echo \"Error: no test specified\" && exit 0",
     "prepare": "husky install"
   },
@@ -23,10 +24,12 @@
   "devDependencies": {
     "@commitlint/cli": "^17.1.2",
     "@commitlint/config-conventional": "^17.1.0",
+    "@docusaurus/core": "^2.1.0",
     "@docusaurus/module-type-aliases": "^2.1.0",
     "@docusaurus/plugin-content-blog": "^2.1.0",
     "@docusaurus/plugin-content-docs": "^2.1.0",
     "@docusaurus/plugin-content-pages": "^2.1.0",
+    "@docusaurus/preset-classic": "^2.1.0",
     "@docusaurus/theme-classic": "^2.1.0",
     "@docusaurus/theme-common": "^2.1.0",
     "@docusaurus/types": "^2.1.0",

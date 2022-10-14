@@ -3,7 +3,7 @@ import { readFile, writeFile } from 'fs/promises'
 
 import { validateOptions } from './pluginOptions'
 import { name } from '../../package.json'
-import { logger } from './logger'
+import logger from './logger'
 import {
   retrieveDocusaurusPluginsContent,
   assertIndexContent
@@ -49,10 +49,10 @@ const docusaurusLyraSearchPlugin = (docusaurusContext, pluginOptions) => {
   return {
     name,
     getThemePath() {
-      return path.resolve(__dirname, '..', '..', 'lib', 'client', 'theme')
+      return path.resolve(__dirname, '..', 'client', 'theme')
     },
     getTypeScriptThemePath() {
-      return path.resolve(__dirname, '..', '..', 'src', 'client', 'theme')
+      return undefined
     },
     getDefaultCodeTranslationMessages: async () => {
       return retrieveTranslationMessages(docusaurusContext)
