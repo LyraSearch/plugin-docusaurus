@@ -4,8 +4,6 @@
 const lightCodeTheme = require('prism-react-renderer/themes/github')
 const darkCodeTheme = require('prism-react-renderer/themes/dracula')
 
-const lyraSearchPluginPath = require('path').join(__dirname, '..')
-
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'My Site',
@@ -28,7 +26,7 @@ const config = {
     defaultLocale: 'en',
     locales: ['en']
   },
-
+  plugins: ['@lyrasearch/docusaurus-lyra-search-plugin'],
   presets: [
     [
       'classic',
@@ -128,8 +126,7 @@ const config = {
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme
       }
-    }),
-  plugins: [[lyraSearchPluginPath, {}]]
+    })
 }
 
 module.exports = config

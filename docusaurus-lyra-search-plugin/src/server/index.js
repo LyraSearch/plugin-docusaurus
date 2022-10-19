@@ -14,6 +14,7 @@ const {
 } = require('./indexableRoutes')
 const { html2text, getDocusaurusTag } = require('./parseUtils')
 
+const PLUGIN_NAME = '@lyrasearch/docusaurus-lyra-search-plugin'
 const generateReadPromises = async ({ file, url, type }) => {
   logger.debug(`Parsing ${type} file ${file}`, { url })
   const html = await readFile(file, { encoding: 'utf8' })
@@ -30,16 +31,15 @@ const generateReadPromises = async ({ file, url, type }) => {
     sectionRoute: url + section.hash,
     sectionTitle: section.title,
     sectionContent: section.content,
-    sectionTags: section.tags,
+    // sectionTags: section.tags, TODO lyra doesn't support arrays
     docusaurusTag,
-    docSidebarParentCategories,
+    // docSidebarParentCategories,
     type
   }))
 }
 
 const docusaurusLyraSearchPlugin = (docusaurusContext, pluginOptions) => {
   pluginOptions = validateOptions(pluginOptions)
-
   const {
     indexDocs,
     indexBlog,
@@ -49,7 +49,7 @@ const docusaurusLyraSearchPlugin = (docusaurusContext, pluginOptions) => {
   } = pluginOptions
 
   return {
-    name: 'docusaurus-lyra-search-plugin',
+    name: PLUGIN_NAME,
     getThemePath() {
       return resolve(__dirname, '..', 'client', 'theme')
     },
@@ -84,7 +84,7 @@ const docusaurusLyraSearchPlugin = (docusaurusContext, pluginOptions) => {
         await Promise.all(data.map(generateReadPromises))
       ).flat()
 
-      await writeFile(
+      writeFile(
         join(outDir, 'lyra-search-index.json'),
         JSON.stringify(indexContent)
       )
