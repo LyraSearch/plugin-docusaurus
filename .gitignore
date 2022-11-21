@@ -8,3 +8,6 @@ node_modules
 
 # OS X
 .DS_Store
+
+# Transpiled JavaScript
+docusaurus-lyra-search-plugin/lib

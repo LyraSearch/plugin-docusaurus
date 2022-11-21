@@ -1,24 +1,27 @@
-const { join, resolve } = require('path')
-const { readFile, writeFile } = require('fs/promises')
+import { join, resolve } from 'path'
+import { readFile, writeFile } from 'fs/promises'
 
-const { validateOptions } = require('./pluginOptions')
-const logger = require('./logger')
-const {
+import { PluginOptions, validateOptions } from './pluginOptions'
+import logger from './logger'
+import {
   retrieveDocusaurusPluginsContent,
   assertIndexContent
-} = require('./docusaurusPluginsContent')
-const { retrieveTranslationMessages } = require('./translationMessages')
-const {
-  retrieveIndexableRoutes,
-  mapRouteToIndex
-} = require('./indexableRoutes')
-const { html2text, getDocusaurusTag } = require('./parseUtils')
+} from './docusaurusPluginsContent'
+import { retrieveTranslationMessages } from './translationMessages'
+import { retrieveIndexableRoutes, mapRouteToIndex } from './indexableRoutes'
+import { html2text, getDocusaurusTag } from './parseUtils'
+import { LoadContext, Plugin } from '@docusaurus/types'
+import { IndexFlags, PluginInfoWithFile } from './types'
 
 const PLUGIN_NAME = '@lyrasearch/docusaurus-lyra-search-plugin'
-const generateReadPromises = async ({ file, url, type }) => {
+const generateReadPromises = async ({
+  file,
+  url,
+  type
+}: PluginInfoWithFile) => {
   logger.debug(`Parsing ${type} file ${file}`, { url })
   const html = await readFile(file, { encoding: 'utf8' })
-  const { pageTitle, sections, docSidebarParentCategories } = html2text(
+  const { pageTitle, sections /*, docSidebarParentCategories */ } = html2text(
     html,
     type,
     url
@@ -38,7 +41,10 @@ const generateReadPromises = async ({ file, url, type }) => {
   }))
 }
 
-const docusaurusLyraSearchPlugin = (docusaurusContext, pluginOptions) => {
+const docusaurusLyraSearchPlugin = (
+  docusaurusContext: LoadContext,
+  pluginOptions: PluginOptions
+): Plugin => {
   pluginOptions = validateOptions(pluginOptions)
   const {
     indexDocs,
@@ -53,9 +59,6 @@ const docusaurusLyraSearchPlugin = (docusaurusContext, pluginOptions) => {
     getThemePath() {
       return resolve(__dirname, '..', 'client', 'theme')
     },
-    getTypeScriptThemePath() {
-      return undefined
-    },
     getDefaultCodeTranslationMessages: async () => {
       return retrieveTranslationMessages(docusaurusContext)
     },
@@ -69,7 +72,7 @@ const docusaurusLyraSearchPlugin = (docusaurusContext, pluginOptions) => {
     async postBuild({ routesPaths = [], outDir, baseUrl, plugins }) {
       logger.info('Retrieving documents')
 
-      const indexFlags = { indexDocs, indexBlog, indexPages }
+      const indexFlags: IndexFlags = { indexDocs, indexBlog, indexPages }
       const pluginsContent = retrieveDocusaurusPluginsContent(plugins)
 
       assertIndexContent(indexFlags, pluginsContent)
@@ -92,4 +95,4 @@ const docusaurusLyraSearchPlugin = (docusaurusContext, pluginOptions) => {
   }
 }
 
-module.exports = docusaurusLyraSearchPlugin
+export default docusaurusLyraSearchPlugin

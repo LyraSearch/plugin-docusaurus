@@ -2,10 +2,11 @@
   "name": "@lyrasearch/docusaurus-lyra-search-plugin",
   "version": "0.0.0",
   "description": "Docusaurus plugin for local search powered by lyra",
-  "main": "src/server/index.js",
+  "main": "lib/server/index.js",
   "scripts": {
-    "build": "vite build",
-    "test": "echo \"Error: no test specified\" && exit 0"
+    "build": "npm run build:client && npm run build:server",
+    "build:client": "tsc --project tsconfig.client.json",
+    "build:server": "tsc --project tsconfig.server.json"
   },
   "repository": {
     "type": "git",
@@ -14,6 +15,7 @@
   "files": [
     "/src",
     "/translationMessages",
+    "/lib",
     "/README.md"
   ],
   "publishConfig": {
@@ -30,18 +32,19 @@
   },
   "homepage": "https://github.com/nearform/docusaurus-lyra-search-plugin#readme",
   "devDependencies": {
-    "@docusaurus/core": "^2.1.0",
-    "@docusaurus/module-type-aliases": "^2.1.0",
-    "@docusaurus/plugin-content-blog": "^2.1.0",
-    "@docusaurus/plugin-content-docs": "^2.1.0",
-    "@docusaurus/plugin-content-pages": "^2.1.0",
-    "@docusaurus/preset-classic": "^2.1.0",
-    "@docusaurus/theme-classic": "^2.1.0",
-    "@docusaurus/theme-common": "^2.1.0",
-    "@docusaurus/types": "^2.1.0"
+    "@docusaurus/core": "^2.2.0",
+    "@docusaurus/module-type-aliases": "^2.2.0",
+    "@docusaurus/plugin-content-blog": "^2.2.0",
+    "@docusaurus/plugin-content-docs": "^2.2.0",
+    "@docusaurus/plugin-content-pages": "^2.2.0",
+    "@docusaurus/preset-classic": "^2.2.0",
+    "@docusaurus/theme-classic": "^2.2.0",
+    "@docusaurus/types": "^2.2.0",
+    "@types/react-dom": "^18.0.9",
+    "typescript": "^4.9.3"
   },
   "peerDependencies": {
-    "@docusaurus/core": "^2.1.0"
+    "@docusaurus/core": "^2.2.0"
   },
   "dependencies": {
     "@algolia/autocomplete-js": "^1.7.2",

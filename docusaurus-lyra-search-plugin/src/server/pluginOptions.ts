@@ -1,6 +1,15 @@
-const { Joi } = require('@docusaurus/utils-validation')
+import { Joi } from '@docusaurus/utils-validation'
 
-const pluginOptionsSchema = Joi.object({
+export type PluginOptions = {
+  id: string
+  indexDocs: boolean
+  indexDocSidebarParentCategories: number
+  indexBlog: boolean
+  indexPages: boolean
+  maxSearchResults: number
+}
+
+const pluginOptionsSchema = Joi.object<PluginOptions>({
   id: Joi.string(),
   indexDocs: Joi.boolean().default(true),
   indexDocSidebarParentCategories: Joi.number()
@@ -13,14 +22,10 @@ const pluginOptionsSchema = Joi.object({
   maxSearchResults: Joi.number().integer().min(1).default(8)
 })
 
-const validateOptions = options => {
+export const validateOptions = (options: PluginOptions) => {
   const validationResult = pluginOptionsSchema.validate(options)
   if (validationResult.error) {
     throw new Error(`Invalid plugin options: ${validationResult.error.message}`)
   }
   return validationResult.value
-}
-
-module.exports = {
-  validateOptions
 }

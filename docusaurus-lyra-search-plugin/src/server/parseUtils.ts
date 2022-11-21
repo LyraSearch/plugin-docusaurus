@@ -1,6 +1,20 @@
-const cheerio = require('cheerio')
+import { AnyNode, Cheerio, Element, CheerioAPI, load } from 'cheerio'
+import { ElementType } from 'domelementtype'
+import logger from './logger'
+import { PluginType } from './types'
 
-const logger = require('./logger')
+type SectionData = {
+  title: string
+  hash: string
+  content: string
+  tags: string[]
+}
+
+type PageInfo = {
+  pageTitle: string
+  sections: SectionData[]
+  docSidebarParentCategories?: string[]
+}
 
 const BLOCK_TAGS = [
   'address',
@@ -45,13 +59,13 @@ const MULTIPLE_SPACES_REGEX = /\s+/g
 
 const HEADINGS = 'h1, h2, h3'
 
-function _getText($, el) {
+function _getText($: CheerioAPI, el: AnyNode[] | AnyNode): string {
   if (Array.isArray(el)) {
     let content = ''
     el.forEach(el => {
       content += _getText($, el)
       if (
-        el.type === 'tag' &&
+        el.type === ElementType.Tag &&
         (BLOCK_TAGS.includes(el.name) ||
           // for lines in code blocks
           (el.name === 'span' && $(el).attr('class') === 'token-line'))
@@ -60,11 +74,15 @@ function _getText($, el) {
       }
     })
     return content
-  } else if (el.type === 'text') {
+  } else if (el.type === ElementType.Text) {
     return el.data.replace(/\n/g, ' ')
-  } else if (el.type === 'tag') {
+  } else if (el.type === ElementType.Tag) {
     return _getText($, $(el).contents().get())
-  } else if (['style', 'script', 'comment'].includes(el.type)) {
+  } else if (
+    [ElementType.Style, ElementType.Script, ElementType.Comment].includes(
+      el.type
+    )
+  ) {
     return ''
   } else {
     logger.warn(
@@ -74,11 +92,11 @@ function _getText($, el) {
   }
 }
 
-function getText($, el) {
+function getText($: CheerioAPI, el: AnyNode[]) {
   return _getText($, el).replace(MULTIPLE_SPACES_REGEX, ' ').trim()
 }
 
-const removeVersionBadges = cheerioInstance => {
+const removeVersionBadges = (cheerioInstance: CheerioAPI): void => {
   cheerioInstance('span')
     .filter(
       (_, element) =>
@@ -88,7 +106,7 @@ const removeVersionBadges = cheerioInstance => {
     .remove()
 }
 
-const retrieveTags = cheerioInstance =>
+const retrieveTags = (cheerioInstance: CheerioAPI) =>
   cheerioInstance('article footer ul[class^=tags_] li')
     .map((_, element) => cheerioInstance(element).text())
     .toArray()
@@ -101,7 +119,7 @@ const ARIA_OR_HASHLINK_SELECTOR = `${ARIA_SELECTOR}, ${HASH_LINK_SELECTOR}`
 const SIDEBAR_PARENT_SELECTOR =
   '.theme-doc-sidebar-container .menu__link--active'
 
-const warnMainElement = (mainElement, url) => {
+const warnMainElement = (mainElement: Cheerio<Element>, url: string) => {
   if (!mainElement.length) {
     logger.warn(
       'Page has no <main>, therefore no content was indexed for this page.',
@@ -110,7 +128,7 @@ const warnMainElement = (mainElement, url) => {
   }
 }
 
-const manageTypePage = (cheerioInstance, url) => {
+const manageTypePage = (cheerioInstance: CheerioAPI, url: string): PageInfo => {
   cheerioInstance(ARIA_SELECTOR).remove()
   let pageTitleElement = cheerioInstance('h1').first()
   if (!pageTitleElement.length) {
@@ -137,10 +155,13 @@ const manageTypePage = (cheerioInstance, url) => {
   }
 }
 
-const manageDocsOrBlogType = (cheerioInstance, type) => {
+const manageDocsOrBlogType = (
+  cheerioInstance: CheerioAPI,
+  type: PluginType
+): PageInfo => {
   const pageTitle = cheerioInstance(PAGE_TITLE_SELECTOR).first().text()
 
-  const sections = []
+  const sections: SectionData[] = []
   const tags = retrieveTags(cheerioInstance)
 
   cheerioInstance('article')
@@ -201,8 +222,12 @@ const manageDocsOrBlogType = (cheerioInstance, type) => {
   return { pageTitle, sections, docSidebarParentCategories }
 }
 
-const html2text = (html, type, url = '?') => {
-  const cheerioInstance = cheerio.load(html)
+export const html2text = (
+  html: string,
+  type: PluginType,
+  url: string = '?'
+) => {
+  const cheerioInstance = load(html)
   // Remove copy buttons from code boxes
   cheerioInstance(COPY_BUTTOINS_SELECTOR).remove()
 
@@ -218,20 +243,15 @@ const html2text = (html, type, url = '?') => {
   }
 }
 
-const assertTagPresence = tag => {
+const assertTagPresence = (tag?: string) => {
   if (!tag || tag.length === 0) {
     throw new Error('The `docusaurus_tag` meta tag could not be found.')
   }
 }
 
-const getDocusaurusTag = html => {
-  const $ = cheerio.load(html)
+export const getDocusaurusTag = (html: string) => {
+  const $ = load(html)
   const tag = $('meta[name="docusaurus_tag"]').attr('content')
   assertTagPresence(tag)
   return tag
-}
-
-module.exports = {
-  html2text,
-  getDocusaurusTag
 }

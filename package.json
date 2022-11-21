@@ -32,9 +32,10 @@
     "prettier": "^2.7.1"
   },
   "lint-staged": {
-    "*.{js,jsx}": "eslint --cache --fix"
+    "*.{ts, tsx}": "eslint ./docusaurus-lyra-search-plugin --cache --fix"
   },
   "scripts": {
-    "lint": "eslint ./docusaurus-lyra-search-plugin"
+    "lint": "eslint ./docusaurus-lyra-search-plugin --fix",
+    "build": "npm --prefix docusaurus-lyra-search-plugin run build"
   }
 }

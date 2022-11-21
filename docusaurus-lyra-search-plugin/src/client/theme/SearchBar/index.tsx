@@ -1,4 +1,4 @@
-import { autocomplete } from '@algolia/autocomplete-js'
+import { autocomplete, AutocompleteComponents } from '@algolia/autocomplete-js'
 
 import '@algolia/autocomplete-theme-classic/dist/theme.min.css'
 
@@ -6,11 +6,18 @@ import React, { createElement, Fragment, useEffect, useRef } from 'react'
 import { render } from 'react-dom'
 import useIsBrowser from '@docusaurus/useIsBrowser'
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext'
-import { getLyraSearch } from './getLyraSearch'
+import { getLyraSearch, SectionSchema } from './getLyraSearch'
+import { ResolveSchema } from '@lyrasearch/lyra/dist/esm/src/types'
 
 // components.Snippet just truncates here, it doesn't actually truncate to the content near the hit
 const templates = {
-  item({ item, components }) {
+  item({
+    item,
+    components
+  }: {
+    item: ResolveSchema<SectionSchema>
+    components: AutocompleteComponents
+  }) {
     return (
       <a className="aa-ItemLink" href={item.pageRoute}>
         <div className="aa-ItemContent">
@@ -38,10 +45,13 @@ export default function SearchBar() {
 
     const search = autocomplete({
       container: containerRef.current,
-      renderer: { createElement, Fragment, render },
+      renderer: { createElement, Fragment },
+      render({ children }, root) {
+        render(children as any, root)
+      },
       openOnFocus: true,
       detachedMediaQuery: '',
-      async getSources({ query }) {
+      async getSources({ query }): Promise<any> {
         const search = await getLyraSearch(siteConfig.baseUrl)
         return [
           {
@@ -51,7 +61,7 @@ export default function SearchBar() {
               console.log(results)
               return results.hits.map(hit => hit.document)
             },
-            getItemUrl({ item }) {
+            getItemUrl({ item }: { item: ResolveSchema<SectionSchema> }) {
               return item.pageRoute
             },
             templates
