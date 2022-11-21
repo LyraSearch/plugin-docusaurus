@@ -49,7 +49,7 @@ export default function SearchBar() {
             getItems() {
               const results = search(query)
               console.log(results)
-              return results.hits
+              return results.hits.map(hit => hit.document)
             },
             getItemUrl({ item }) {
               return item.pageRoute
