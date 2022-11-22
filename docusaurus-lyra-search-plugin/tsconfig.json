@@ -41,7 +41,13 @@
     "outDir": "lib",
     "types": [
       "node",
-      "@docusaurus/module-type-aliases"
-    ]
-  }
+      "@docusaurus/module-type-aliases",
+      "jest"
+    ],
+    
+  },
+  "exclude": [
+    "**/__tests__",
+    "**/__fixtures__"
+  ]
 }

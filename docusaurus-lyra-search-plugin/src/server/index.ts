@@ -4,14 +4,14 @@ import { readFile, writeFile } from 'fs/promises'
 import { PluginOptions, validateOptions } from './pluginOptions'
 import logger from './logger'
 import {
-  retrieveDocusaurusPluginsContent,
-  assertIndexContent
+  retrieveDocusaurusPluginsContent
+  // assertIndexContent
 } from './docusaurusPluginsContent'
 import { retrieveTranslationMessages } from './translationMessages'
 import { retrieveIndexableRoutes, mapRouteToIndex } from './indexableRoutes'
 import { html2text, getDocusaurusTag } from './parseUtils'
 import { LoadContext, Plugin } from '@docusaurus/types'
-import { IndexFlags, PluginInfoWithFile } from './types'
+import { PluginInfoWithFile } from './types'
 
 const PLUGIN_NAME = '@lyrasearch/docusaurus-lyra-search-plugin'
 const generateReadPromises = async ({
@@ -43,16 +43,11 @@ const generateReadPromises = async ({
 
 const docusaurusLyraSearchPlugin = (
   docusaurusContext: LoadContext,
-  pluginOptions: PluginOptions
+  pluginOptions: Partial<PluginOptions>
 ): Plugin => {
-  pluginOptions = validateOptions(pluginOptions)
-  const {
-    indexDocs,
-    indexBlog,
-    indexPages,
-    indexDocSidebarParentCategories,
-    maxSearchResults
-  } = pluginOptions
+  const options = validateOptions(pluginOptions)
+  const { indexDocSidebarParentCategories, maxSearchResults, ...indexFlags } =
+    options
 
   return {
     name: PLUGIN_NAME,
@@ -71,11 +66,11 @@ const docusaurusLyraSearchPlugin = (
     },
     async postBuild({ routesPaths = [], outDir, baseUrl, plugins }) {
       logger.info('Retrieving documents')
+      logger.info(baseUrl)
 
-      const indexFlags: IndexFlags = { indexDocs, indexBlog, indexPages }
       const pluginsContent = retrieveDocusaurusPluginsContent(plugins)
 
-      assertIndexContent(indexFlags, pluginsContent)
+      // assertIndexContent(indexFlags, pluginsContent)
 
       const data = routesPaths
         .flatMap(retrieveIndexableRoutes(baseUrl, pluginsContent, indexFlags))

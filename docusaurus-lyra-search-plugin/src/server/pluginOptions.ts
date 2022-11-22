@@ -22,7 +22,9 @@ const pluginOptionsSchema = Joi.object<PluginOptions>({
   maxSearchResults: Joi.number().integer().min(1).default(8)
 })
 
-export const validateOptions = (options: PluginOptions) => {
+export const validateOptions = (
+  options: Partial<PluginOptions>
+): PluginOptions => {
   const validationResult = pluginOptionsSchema.validate(options)
   if (validationResult.error) {
     throw new Error(`Invalid plugin options: ${validationResult.error.message}`)

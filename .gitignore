@@ -11,3 +11,6 @@ node_modules
 
 # Transpiled JavaScript
 docusaurus-lyra-search-plugin/lib
+
+# Test tmp files
+lyra-search-index.json
