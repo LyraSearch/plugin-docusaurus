@@ -32,7 +32,7 @@
     "@commitlint/cli": "^17.3.0",
     "@commitlint/config-conventional": "^17.1.0",
     "@docusaurus/core": "^2.1.0",
-    "@docusaurus/module-type-aliases": "^2.1.0",
+    "@docusaurus/module-type-aliases": "^2.2.0",
     "@docusaurus/plugin-content-blog": "^2.1.0",
     "@docusaurus/plugin-content-docs": "^2.1.0",
     "@docusaurus/plugin-content-pages": "^2.1.0",
