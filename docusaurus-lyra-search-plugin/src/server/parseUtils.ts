@@ -111,7 +111,7 @@ const retrieveTags = (cheerioInstance: CheerioAPI) =>
     .map((_, element) => cheerioInstance(element).text())
     .toArray()
 
-const COPY_BUTTOINS_SELECTOR = 'div[class^=codeBlockContent_] button'
+const COPY_BUTTONS_SELECTOR = 'div[class^=codeBlockContent_] button'
 const PAGE_TITLE_SELECTOR = 'article header h1'
 const HASH_LINK_SELECTOR = 'a.hash-link'
 const ARIA_SELECTOR = 'a[aria-hidden=true]'
@@ -229,7 +229,7 @@ export const html2text = (
 ) => {
   const cheerioInstance = load(html)
   // Remove copy buttons from code boxes
-  cheerioInstance(COPY_BUTTOINS_SELECTOR).remove()
+  cheerioInstance(COPY_BUTTONS_SELECTOR).remove()
 
   if (type === 'docs') {
     removeVersionBadges(cheerioInstance)

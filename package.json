@@ -35,7 +35,7 @@
     "*.{ts, tsx}": "eslint ./docusaurus-lyra-search-plugin --cache --fix"
   },
   "scripts": {
-    "lint": "eslint ./docusaurus-lyra-search-plugin --fix",
+    "lint": "eslint ./docusaurus-lyra-search-plugin",
     "build": "npm --prefix docusaurus-lyra-search-plugin run build"
   }
 }
