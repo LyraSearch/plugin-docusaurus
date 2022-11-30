@@ -23,8 +23,7 @@
           "^@theme",
           "^@docusaurus",
           "^@generated",
-          "unist",
-          "mdast"
+          "lib"
         ]
       }
     ]

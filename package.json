@@ -20,15 +20,15 @@
   },
   "homepage": "https://github.com/nearform/docusaurus-lyra-search-plugin#readme",
   "devDependencies": {
-    "@commitlint/cli": "^17.3.0",
-    "@commitlint/config-conventional": "^17.3.0",
+    "@commitlint/cli": "^17.1.2",
+    "@commitlint/config-conventional": "^17.1.0",
     "eslint": "^8.25.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-config-react-app": "^7.0.1",
     "eslint-plugin-prettier": "^4.2.1",
-    "eslint-plugin-react": "^7.31.11",
-    "husky": "^8.0.2",
-    "lint-staged": "^13.0.4",
+    "eslint-plugin-react": "^7.31.8",
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.3",
     "prettier": "^2.7.1"
   },
   "lint-staged": {
@@ -36,6 +36,7 @@
   },
   "scripts": {
     "lint": "eslint ./docusaurus-lyra-search-plugin",
-    "build": "npm --prefix docusaurus-lyra-search-plugin run build"
+    "build": "npm --prefix docusaurus-lyra-search-plugin run build",
+    "test": ""
   }
 }
