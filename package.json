@@ -36,7 +36,7 @@
   },
   "scripts": {
     "lint": "eslint ./docusaurus-lyra-search-plugin",
-    "build": "npm --prefix docusaurus-lyra-search-plugin run build",
+    "build": "npm --prefix docusaurus-lyra-search-plugin run build && npm --prefix website run build",
     "test": ""
   }
 }
