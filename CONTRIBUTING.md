@@ -14,4 +14,4 @@ The `client` part implements the React component that will be shown to the user 
 ### The `example-doc` folder
 In the `example-doc` directory there is a generated docusaurus instance with the plugin already configured.
 
-During development, you don't have to build anything to make it loadable, as it is loaded by the Webpack instance of Docusaurs.
+During development, you don't have to build anything to make it loadable, as it is loaded by the Webpack instance of Docusaurus.

@@ -1,10 +1,15 @@
-![CI](https://github.com/nearform/bench-template/actions/workflows/ci.yml/badge.svg?event=push)
+![CI](https://github.com/nearform/docusaurus-lyra-search-plugin/actions/workflows/ci.yml/badge.svg?event=push)
 
 # Docusaurus Lyra Search Plugin
 
 This is a Docusaurus Search Plugin powered by LyraJS.
 
-At build time, it scans every HTML file produced during the build phase to create an index for Lyra.  
-This index will be saved inside the output directory, in order to be fetched and processed by Lyra at runtime.
+The plugin can be found in './docusaurus-lyra-search-plugin'. A "fresh" docusaurus app can be found in './website' with the plugin configured.
 
-*NOTE*: as the index is generated at build time, search will not be available on the documentation development phase.
+To test running the plugin locally run:
+
+```
+npm i
+cd website
+npm run build && npm run serve
+```

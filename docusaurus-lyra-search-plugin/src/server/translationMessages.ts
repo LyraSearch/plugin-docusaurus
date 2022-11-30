@@ -1,7 +1,8 @@
-const path = require('path')
-const fs = require('fs')
+import path from 'path'
+import fs from 'fs'
+import { LoadContext } from '@docusaurus/types'
 
-function codeTranslationLocalesToTry(locale) {
+function codeTranslationLocalesToTry(locale: string) {
   const intlLocale = new Intl.Locale(locale)
   const maximizedLocale = intlLocale.maximize()
   return [
@@ -12,12 +13,14 @@ function codeTranslationLocalesToTry(locale) {
   ]
 }
 
-const retrieveObjectContent = async filePath => {
+const retrieveObjectContent = async (filePath: string) => {
   const fileContent = await fs.promises.readFile(filePath, 'utf8')
   return JSON.parse(fileContent)
 }
 
-const retrieveTranslationMessages = async docusaurusContext => {
+export const retrieveTranslationMessages = async (
+  docusaurusContext: LoadContext
+) => {
   const translationsDir = path.resolve(
     __dirname,
     '..',
@@ -35,8 +38,4 @@ const retrieveTranslationMessages = async docusaurusContext => {
   return existingLocalePath
     ? retrieveObjectContent(existingLocalePath)
     : Promise.resolve({})
-}
-
-module.exports = {
-  retrieveTranslationMessages
 }

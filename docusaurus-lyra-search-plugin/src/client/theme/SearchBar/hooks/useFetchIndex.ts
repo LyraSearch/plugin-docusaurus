@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 
 const SEARCH_INDEX_AVAILABLE = process.env.NODE_ENV === 'production'
 
-const useFetchIndex = ({ baseUrl }) => {
+const useFetchIndex = ({ baseUrl }: { baseUrl: string }) => {
   const [index, setIndex] = useState([])
   const [isLoading, setIsLoading] = useState(false)
 

@@ -1,67 +1,42 @@
 {
-  "name": "@lyrasearch/docusaurus-lyra-search-plugin",
-  "version": "1.0.0",
-  "description": "Template to start a new repository on the bench",
-  "main": "src/server/index.js",
-  "scripts": {
-    "lint": "eslint .",
-    "build": "vite build",
-    "test": "echo \"Error: no test specified\" && exit 0",
-    "prepare": "husky install"
-  },
+  "name": "docusaurus-lyra-search-plugin",
+  "private": true,
+  "workspaces": [
+    "website",
+    "docusaurus-lyra-search-plugin"
+  ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nearform/bench-template.git"
+    "url": "git+https://github.com/nearform/docusaurus-lyra-search-plugin.git"
   },
   "files": [
     "/src",
     "/translationMessages",
     "/README.md"
   ],
-  "publishConfig": {
-    "access": "public"
-  },
-  "keywords": [],
-  "author": "",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/nearform/docusaurus-lyra-search-plugin/issues"
   },
   "homepage": "https://github.com/nearform/docusaurus-lyra-search-plugin#readme",
   "devDependencies": {
-    "@commitlint/cli": "^17.3.0",
-    "@commitlint/config-conventional": "^17.3.0",
-    "@docusaurus/core": "^2.2.0",
-    "@docusaurus/module-type-aliases": "^2.2.0",
-    "@docusaurus/plugin-content-blog": "^2.1.0",
-    "@docusaurus/plugin-content-docs": "^2.1.0",
-    "@docusaurus/plugin-content-pages": "^2.1.0",
-    "@docusaurus/preset-classic": "^2.2.0",
-    "@docusaurus/theme-classic": "^2.1.0",
-    "@docusaurus/theme-common": "^2.2.0",
-    "@docusaurus/types": "^2.2.0",
-    "eslint": "^8.28.0",
+    "@commitlint/cli": "^17.1.2",
+    "@commitlint/config-conventional": "^17.1.0",
+    "eslint": "^8.25.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-config-react-app": "^7.0.1",
     "eslint-plugin-prettier": "^4.2.1",
-    "eslint-plugin-react": "^7.31.11",
-    "husky": "^8.0.2",
-    "lint-staged": "^13.0.4",
+    "eslint-plugin-react": "^7.31.8",
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.3",
     "prettier": "^2.7.1"
   },
-  "peerDependencies": {
-    "@docusaurus/core": "^2.2.0"
-  },
   "lint-staged": {
-    "*.{js,jsx}": "eslint --cache --fix"
+    "*.{ts, tsx}": "eslint ./docusaurus-lyra-search-plugin --cache --fix"
   },
-  "dependencies": {
-    "@lyrasearch/lyra": "^0.3.1",
-    "cheerio": "^1.0.0-rc.12",
-    "pino": "^8.7.0"
-  },
-  "workspaces": [
-    "./",
-    "example-doc"
-  ]
+  "scripts": {
+    "lint": "eslint ./docusaurus-lyra-search-plugin",
+    "build": "npm --prefix docusaurus-lyra-search-plugin run build && npm --prefix website run build",
+    "test": ""
+  }
 }
