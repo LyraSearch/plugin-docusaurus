@@ -58,7 +58,7 @@
   "dependencies": {
     "@lyrasearch/lyra": "^0.3.1",
     "cheerio": "^1.0.0-rc.12",
-    "pino": "^8.6.1"
+    "pino": "^8.7.0"
   },
   "workspaces": [
     "./",
