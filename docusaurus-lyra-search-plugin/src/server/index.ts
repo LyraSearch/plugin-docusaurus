@@ -1,93 +1,85 @@
 import { join, resolve } from 'path'
-import { readFile, writeFile } from 'fs/promises'
+import { writeFile } from 'fs/promises'
 
-import { PluginOptions, validateOptions } from './pluginOptions'
-import logger from './logger'
-import {
-  retrieveDocusaurusPluginsContent
-  // assertIndexContent
-} from './docusaurusPluginsContent'
 import { retrieveTranslationMessages } from './translationMessages'
-import { retrieveIndexableRoutes, mapRouteToIndex } from './indexableRoutes'
-import { html2text, getDocusaurusTag } from './parseUtils'
 import { LoadContext, Plugin } from '@docusaurus/types'
-import { PluginInfoWithFile } from './types'
+import { create } from '@lyrasearch/lyra'
+import { SectionSchema } from '../types'
+import { ResolveSchema } from '@lyrasearch/lyra/dist/esm/src/types'
+import { defaultHtmlSchema } from '@lyrasearch/plugin-parsedoc'
 
 const PLUGIN_NAME = '@lyrasearch/docusaurus-lyra-search-plugin'
-const generateReadPromises = async ({
-  file,
-  url,
-  type
-}: PluginInfoWithFile) => {
-  logger.debug(`Parsing ${type} file ${file}`, { url })
-  const html = await readFile(file, { encoding: 'utf8' })
-  const { pageTitle, sections /*, docSidebarParentCategories */ } = html2text(
-    html,
-    type,
-    url
-  )
-  const docusaurusTag = getDocusaurusTag(html)
+const docusaurusLyraSearchPlugin = (
+  docusaurusContext: LoadContext
+): Plugin => ({
+  name: PLUGIN_NAME,
+  getThemePath() {
+    return resolve(__dirname, '..', 'client', 'theme')
+  },
+  getDefaultCodeTranslationMessages: async () => {
+    return retrieveTranslationMessages(docusaurusContext)
+  },
+  async postBuild({ outDir }) {
+    const index = await retrieveIndex()
+    return writeIndex(outDir, index)
+  }
+})
 
-  return sections.map(section => ({
-    pageTitle,
-    pageRoute: url,
-    sectionRoute: url + section.hash,
-    sectionTitle: section.title,
-    sectionContent: section.content,
-    // sectionTags: section.tags, TODO lyra doesn't support arrays
-    docusaurusTag,
-    // docSidebarParentCategories,
-    type
-  }))
+const importDynamic = new Function('modulePath', 'return import(modulePath)')
+
+async function retrieveIndex(): Promise<ResolveSchema<SectionSchema>[]> {
+  const { defaultHtmlSchema, populateFromGlob } = await importDynamic(
+    '@lyrasearch/plugin-parsedoc'
+  )
+  const db = create({ schema: defaultHtmlSchema })
+  await populateFromGlob(db, '**/*.html', {
+    transformFn: (node: any) => {
+      switch (node.tag) {
+        case 'strong':
+        case 'a':
+        case 'time':
+        case 'code':
+        case 'span':
+        case 'small':
+        case 'b':
+        case 'p':
+        case 'ul':
+          return { ...node, raw: `<p>${node.content}</p>` }
+        default:
+          return node
+      }
+    }
+  })
+
+  return (Object.values(db.docs) as ResolveSchema<typeof defaultHtmlSchema>[])
+    .map(defaultToSectionSchema)
+    .filter(isIndexable)
 }
 
-const docusaurusLyraSearchPlugin = (
-  docusaurusContext: LoadContext,
-  pluginOptions: Partial<PluginOptions>
-): Plugin => {
-  const options = validateOptions(pluginOptions)
-  const { indexDocSidebarParentCategories, maxSearchResults, ...indexFlags } =
-    options
-
+function defaultToSectionSchema(
+  node: ResolveSchema<typeof defaultHtmlSchema>
+): ResolveSchema<SectionSchema> {
+  const { id, content, type } = node
+  const pageRoute = id.substring(id.indexOf('/'), id.lastIndexOf('/'))
+  const [sectionTitle] = pageRoute.split('/').slice(-2, -1)
   return {
-    name: PLUGIN_NAME,
-    getThemePath() {
-      return resolve(__dirname, '..', 'client', 'theme')
-    },
-    getDefaultCodeTranslationMessages: async () => {
-      return retrieveTranslationMessages(docusaurusContext)
-    },
-    async contentLoaded({ actions: { setGlobalData } }) {
-      const data = {
-        indexDocSidebarParentCategories,
-        maxSearchResults
-      }
-      setGlobalData({ data })
-    },
-    async postBuild({ routesPaths = [], outDir, baseUrl, plugins }) {
-      logger.info('Retrieving documents')
-      logger.info(baseUrl)
-
-      const pluginsContent = retrieveDocusaurusPluginsContent(plugins)
-
-      // assertIndexContent(indexFlags, pluginsContent)
-
-      const data = routesPaths
-        .flatMap(retrieveIndexableRoutes(baseUrl, pluginsContent, indexFlags))
-        .map(mapRouteToIndex(outDir))
-
-      logger.info('Documents retrieved, started index build...')
-
-      const indexContent = (
-        await Promise.all(data.map(generateReadPromises))
-      ).flat()
-
-      writeFile(
-        join(outDir, 'lyra-search-index.json'),
-        JSON.stringify(indexContent)
-      )
-    }
+    pageRoute,
+    sectionTitle,
+    sectionContent: content,
+    type
   }
+}
+
+function isIndexable(doc: ResolveSchema<SectionSchema>): boolean {
+  return (
+    !!doc.sectionTitle &&
+    doc.type !== 'script' &&
+    !doc.pageRoute.startsWith('/blogs/tags/')
+  )
+}
+
+async function writeIndex(path: string, index: ResolveSchema<SectionSchema>[]) {
+  return writeFile(join(path, 'lyra-search-index.json'), JSON.stringify(index))
 }
 
 export default docusaurusLyraSearchPlugin

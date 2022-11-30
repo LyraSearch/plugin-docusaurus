@@ -1,21 +1,6 @@
-import {
-  create,
-  insert,
-  PropertiesSchema,
-  search,
-  SearchResult
-} from '@lyrasearch/lyra'
+import { create, insert, search, SearchResult } from '@lyrasearch/lyra'
 import { ResolveSchema } from '@lyrasearch/lyra/dist/esm/src/types'
-
-export interface SectionSchema extends PropertiesSchema {
-  pageTitle: 'string'
-  pageRoute: 'string'
-  sectionRoute: 'string'
-  sectionTitle: 'string'
-  sectionContent: 'string'
-  docusaurusTag: 'string'
-  type: 'string'
-}
+import { SectionSchema } from '../../../types'
 
 let searchFn: (term: string) => SearchResult<SectionSchema>
 
@@ -26,12 +11,9 @@ export const getLyraSearch = async (baseUrl: string) => {
     )
     const db = create<SectionSchema>({
       schema: {
-        pageTitle: 'string',
         pageRoute: 'string',
-        sectionRoute: 'string',
         sectionTitle: 'string',
         sectionContent: 'string',
-        docusaurusTag: 'string',
         type: 'string'
       }
     })

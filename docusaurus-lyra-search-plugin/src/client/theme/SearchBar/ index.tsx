@@ -1,13 +1,11 @@
 import { autocomplete, AutocompleteComponents } from '@algolia/autocomplete-js'
-
-import '@algolia/autocomplete-theme-classic/dist/theme.min.css'
-
 import React, { createElement, Fragment, useEffect, useRef } from 'react'
 import { render } from 'react-dom'
 import useIsBrowser from '@docusaurus/useIsBrowser'
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext'
-import { getLyraSearch, SectionSchema } from './getLyraSearch'
+import { getLyraSearch } from './getLyraSearch'
 import { ResolveSchema } from '@lyrasearch/lyra/dist/esm/src/types'
+import { SectionSchema } from '../../../types'
 
 // components.Snippet just truncates here, it doesn't actually truncate to the content near the hit
 const templates = {
