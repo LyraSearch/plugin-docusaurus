@@ -19,15 +19,17 @@ const docusaurusLyraSearchPlugin = (
   getDefaultCodeTranslationMessages: async () => {
     return retrieveTranslationMessages(docusaurusContext)
   },
-  async postBuild({ outDir }) {
-    const index = await retrieveIndex()
+  async postBuild({ outDir, baseUrl }) {
+    const index = await retrieveIndex(baseUrl)
     return writeIndex(outDir, index)
   }
 })
 
 const importDynamic = new Function('modulePath', 'return import(modulePath)')
 
-async function retrieveIndex(): Promise<ResolveSchema<SectionSchema>[]> {
+async function retrieveIndex(
+  baseUrl: string
+): Promise<ResolveSchema<SectionSchema>[]> {
   const { defaultHtmlSchema, populateFromGlob } = await importDynamic(
     '@lyrasearch/plugin-parsedoc'
   )
@@ -52,16 +54,17 @@ async function retrieveIndex(): Promise<ResolveSchema<SectionSchema>[]> {
   })
 
   return (Object.values(db.docs) as ResolveSchema<typeof defaultHtmlSchema>[])
-    .map(defaultToSectionSchema)
+    .map(node => defaultToSectionSchema(node, baseUrl))
     .filter(isIndexable)
 }
 
 function defaultToSectionSchema(
-  node: ResolveSchema<typeof defaultHtmlSchema>
+  node: ResolveSchema<typeof defaultHtmlSchema>,
+  baseUrl: string
 ): ResolveSchema<SectionSchema> {
   const { id, content, type } = node
-  const pageRoute = id.substring(id.indexOf('/'), id.lastIndexOf('/'))
-  const [sectionTitle] = pageRoute.split('/').slice(-2, -1)
+  const pageRoute = `${baseUrl}${id.split('/').slice(1, -2).join('/')}`
+  const sectionTitle = pageRoute.split('/').pop() ?? ''
   return {
     pageRoute,
     sectionTitle,
@@ -72,6 +75,7 @@ function defaultToSectionSchema(
 
 function isIndexable(doc: ResolveSchema<SectionSchema>): boolean {
   return (
+    !!doc.sectionContent &&
     !!doc.sectionTitle &&
     doc.type !== 'script' &&
     !doc.pageRoute.startsWith('/blogs/tags/')
