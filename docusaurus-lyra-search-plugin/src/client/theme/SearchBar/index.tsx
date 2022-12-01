@@ -1,4 +1,5 @@
 import { autocomplete, AutocompleteComponents } from '@algolia/autocomplete-js'
+import '@algolia/autocomplete-theme-classic/dist/theme.min.css'
 import React, { createElement, Fragment, useEffect, useRef } from 'react'
 import { render } from 'react-dom'
 import useIsBrowser from '@docusaurus/useIsBrowser'

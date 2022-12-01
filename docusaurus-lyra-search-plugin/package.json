@@ -4,8 +4,8 @@
   "description": "Docusaurus plugin for local search powered by lyra",
   "main": "lib/server/index.js",
   "scripts": {
-    "build": "npm run build:client && npm run build:server",
-    "build:client": "tsc --project tsconfig.client.json",
+    "build": "rm -rf lib && npm run build:client && npm run build:server",
+    "build:client": "tsc --project tsconfig.client.json ",
     "build:server": "tsc --project tsconfig.server.json",
     "test": "jest"
   },
