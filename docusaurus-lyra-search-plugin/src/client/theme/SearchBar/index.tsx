@@ -8,6 +8,8 @@ import { getLyraSearch } from './getLyraSearch'
 import { ResolveSchema } from '@lyrasearch/lyra/dist/esm/src/types'
 import { SectionSchema } from '../../../types'
 import { useColorMode } from '@docusaurus/theme-common'
+import { Footer } from './Footer'
+import '@docsearch/css'
 
 // components.Snippet just truncates here, it doesn't actually truncate to the content near the hit
 const templates = {
@@ -32,6 +34,16 @@ const templates = {
         </div>
       </a>
     )
+  },
+  footer() {
+    return (
+      <footer className="DocSearch-Footer">
+        <Footer />
+      </footer>
+    )
+  },
+  noResults() {
+    return <div />
   }
 }
 
@@ -84,5 +96,5 @@ export default function SearchBar() {
       : document.body.classList.remove('dark')
   }, [colorMode])
 
-  return <div ref={containerRef} />
+  return <div ref={containerRef}></div>
 }
