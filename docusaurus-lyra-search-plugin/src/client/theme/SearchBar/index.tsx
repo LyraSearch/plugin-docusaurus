@@ -96,5 +96,5 @@ export default function SearchBar() {
       : document.body.classList.remove('dark')
   }, [colorMode])
 
-  return <div ref={containerRef}></div>
+  return <div ref={containerRef} />
 }
