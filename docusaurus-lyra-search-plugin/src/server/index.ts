@@ -9,12 +9,14 @@ import { ResolveSchema } from '@lyrasearch/lyra/dist/esm/src/types'
 import { defaultHtmlSchema } from '@lyrasearch/plugin-parsedoc'
 
 const PLUGIN_NAME = '@lyrasearch/docusaurus-lyra-search-plugin'
+const getThemePath = () => resolve(__dirname, '..', 'client', 'theme')
 const docusaurusLyraSearchPlugin = (
   docusaurusContext: LoadContext
 ): Plugin => ({
   name: PLUGIN_NAME,
-  getThemePath() {
-    return resolve(__dirname, '..', 'client', 'theme')
+  getThemePath,
+  getPathsToWatch() {
+    return [getThemePath(), resolve(__dirname, '..', 'styles.module.css')]
   },
   getDefaultCodeTranslationMessages: async () => {
     return retrieveTranslationMessages(docusaurusContext)
