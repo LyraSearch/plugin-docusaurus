@@ -7,6 +7,9 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext'
 import { getLyraSearch } from './getLyraSearch'
 import { ResolveSchema } from '@lyrasearch/lyra/dist/esm/src/types'
 import { SectionSchema } from '../../../types'
+import { useColorMode } from '@docusaurus/theme-common'
+import { Footer } from './Footer'
+import '@docsearch/css'
 
 // components.Snippet just truncates here, it doesn't actually truncate to the content near the hit
 const templates = {
@@ -23,12 +26,24 @@ const templates = {
           <div className="aa-ItemContentBody">
             <div className="aa-ItemContentTitle">
               <h5 style={{ marginBottom: 0 }}>{item.sectionTitle}</h5>
+            </div>
+            <div className="aa-ItemContentDescription">
               <components.Snippet hit={item} attribute="sectionContent" />
             </div>
           </div>
         </div>
       </a>
     )
+  },
+  footer() {
+    return (
+      <footer className="DocSearch-Footer">
+        <Footer />
+      </footer>
+    )
+  },
+  noResults() {
+    return <div />
   }
 }
 
@@ -36,6 +51,7 @@ export default function SearchBar() {
   const isBrowser = useIsBrowser()
   const { siteConfig } = useDocusaurusContext()
   const containerRef = useRef(null)
+  const { colorMode } = useColorMode()
 
   useEffect(() => {
     if (!containerRef.current || !isBrowser) {
@@ -73,6 +89,12 @@ export default function SearchBar() {
       search.destroy()
     }
   }, [isBrowser, siteConfig])
+
+  useEffect(() => {
+    colorMode === 'dark'
+      ? document.body.classList.add(colorMode)
+      : document.body.classList.remove('dark')
+  }, [colorMode])
 
   return <div ref={containerRef} />
 }

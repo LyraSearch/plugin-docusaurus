@@ -64,7 +64,12 @@ function defaultToSectionSchema(
 ): ResolveSchema<SectionSchema> {
   const { id, content, type } = node
   const pageRoute = `${baseUrl}${id.split('/').slice(1, -2).join('/')}`
-  const sectionTitle = pageRoute.split('/').pop() ?? ''
+  const sectionTitle = (pageRoute.split('/').pop() ?? '')
+    .replace(/(-)+/g, ' ')
+    .split(' ')
+    .map(word => word && `${word[0].toUpperCase()}${word.substring(1)}`)
+    .join(' ')
+
   return {
     pageRoute,
     sectionTitle,

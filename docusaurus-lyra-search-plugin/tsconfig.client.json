@@ -3,7 +3,8 @@
   "compilerOptions": {
     "target": "ESNext",
     "module": "ESNext",
-    "lib": ["ESNext", "DOM"]
+    "lib": ["ESNext", "DOM"],
+    "moduleResolution": "Node16"
   },
   "include": ["src/client/**/*"]
 }

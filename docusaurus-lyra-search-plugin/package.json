@@ -41,6 +41,9 @@
   "dependencies": {
     "@algolia/autocomplete-js": "^1.7.2",
     "@algolia/autocomplete-theme-classic": "^1.7.3",
+    "@docsearch/react": "^3.3.0",
+    "@docusaurus/plugin-content-docs": "^2.2.0",
+    "@docusaurus/theme-common": "^2.2.0",
     "@lyrasearch/lyra": "^0.3.1",
     "@lyrasearch/plugin-parsedoc": "^0.0.4"
   }
