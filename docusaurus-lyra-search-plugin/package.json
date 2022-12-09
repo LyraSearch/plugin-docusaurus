@@ -7,6 +7,8 @@
     "build": "rm -rf lib && npm run build:client && npm run build:server",
     "build:client": "tsc --project tsconfig.client.json ",
     "build:server": "tsc --project tsconfig.server.json",
+    "watch:client": "tsc --watch --project tsconfig.client.json",
+    "watch:server": "tsc --watch --project tsconfig.server.json",
     "test": "jest"
   },
   "repository": {
@@ -38,11 +40,14 @@
     "@types/react-dom": "^18.0.9",
     "typescript": "^4.9.4"
   },
+  "peerDependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
   "dependencies": {
     "@algolia/autocomplete-js": "^1.7.2",
     "@algolia/autocomplete-theme-classic": "^1.7.3",
-    "@docsearch/react": "^3.3.0",
-    "@docusaurus/plugin-content-docs": "^2.2.0",
+    "@docsearch/css": "^3.3.0",
     "@docusaurus/theme-common": "^2.2.0",
     "@lyrasearch/lyra": "^0.3.1",
     "@lyrasearch/plugin-parsedoc": "^0.0.4"
