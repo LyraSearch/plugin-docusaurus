@@ -51,7 +51,7 @@ export function Footer({ translations = {} }: FooterProps) {
   } = translations
 
   return (
-    <>
+    <footer className="DocSearch-Footer">
       <div className="DocSearch-Logo">
         <LyraLogo translations={{ searchByText }} />
       </div>
@@ -86,6 +86,6 @@ export function Footer({ translations = {} }: FooterProps) {
           <span className="DocSearch-Label">{closeText}</span>
         </li>
       </ul>
-    </>
+    </footer>
   )
 }

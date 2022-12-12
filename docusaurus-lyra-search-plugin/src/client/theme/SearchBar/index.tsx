@@ -36,14 +36,7 @@ const templates = {
     )
   },
   footer() {
-    return (
-      <footer className="DocSearch-Footer">
-        <Footer />
-      </footer>
-    )
-  },
-  noResults() {
-    return <div />
+    return <Footer />
   }
 }
 
@@ -60,28 +53,45 @@ export default function SearchBar() {
 
     const search = autocomplete({
       container: containerRef.current,
-      renderer: { createElement, Fragment },
-      render({ children }, root) {
-        render(children as any, root)
-      },
+      // @ts-expect-error render typing here is for preact, react also works
+      renderer: { createElement, Fragment, render },
       openOnFocus: true,
-      detachedMediaQuery: '',
+      detachedMediaQuery: '', // always detached
       async getSources({ query }): Promise<any> {
-        const search = await getLyraSearch(siteConfig.baseUrl)
-        return [
-          {
-            sourceId: 'lyra',
-            getItems() {
-              const results = search(query)
-              console.log(results)
-              return results.hits.map(hit => hit.document)
-            },
-            getItemUrl({ item }: { item: ResolveSchema<SectionSchema> }) {
-              return item.pageRoute
-            },
-            templates
-          }
-        ]
+        try {
+          const lyraSearch = await getLyraSearch(siteConfig.baseUrl)
+
+          return [
+            {
+              sourceId: 'lyra',
+              getItems() {
+                const results = lyraSearch(query)
+                return results.hits.map(hit => hit.document)
+              },
+              getItemUrl({ item }: { item: ResolveSchema<SectionSchema> }) {
+                return item.pageRoute
+              },
+              templates
+            }
+          ]
+        } catch (e) {
+          // won't work in dev build mode, TODO a better error message here?
+          return []
+        }
+      },
+      renderNoResults({ state, render }, root) {
+        if (!state.collections.length) {
+          render(
+            <>
+              <div style={{ padding: '1rem' }}>
+                No search data available, lyra search is only available on
+                production builds.
+              </div>
+              <Footer />
+            </>,
+            root
+          )
+        }
       }
     })
 
