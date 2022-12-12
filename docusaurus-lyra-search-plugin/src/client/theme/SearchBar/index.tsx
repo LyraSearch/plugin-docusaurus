@@ -9,7 +9,7 @@ import { ResolveSchema } from '@lyrasearch/lyra/dist/esm/src/types'
 import { SectionSchema } from '../../../types'
 import { useColorMode } from '@docusaurus/theme-common'
 import { Footer } from './Footer'
-import '@docsearch/css'
+import '../../../../search.css'
 
 // components.Snippet just truncates here, it doesn't actually truncate to the content near the hit
 const templates = {
@@ -34,9 +34,6 @@ const templates = {
         </div>
       </a>
     )
-  },
-  footer() {
-    return <Footer />
   }
 }
 
@@ -78,6 +75,17 @@ export default function SearchBar() {
           // won't work in dev build mode, TODO a better error message here?
           return []
         }
+      },
+      render({ sections, render }, root) {
+        render(
+          <>
+            <div className="aa-PanelLayout aa-Panel--scrollable">
+              {sections}
+            </div>
+            <Footer />
+          </>,
+          root
+        )
       },
       renderNoResults({ state, render }, root) {
         if (!state.collections.length) {
