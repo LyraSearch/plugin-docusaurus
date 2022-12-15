@@ -55,7 +55,7 @@ function snippet(item: Hit) {
     item.position.start + item.position.length >
     item.sectionContent.length - PADDING
   const preMatch = item.sectionContent.substring(
-    isBeginning ? item.position.start - PADDING : 0,
+    isBeginning ? 0 : item.position.start - PADDING,
     item.position.start
   )
   const match = item.sectionContent.substring(
