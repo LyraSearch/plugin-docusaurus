@@ -27,6 +27,7 @@ const docusaurusLyraSearchPlugin = (
   }
 })
 
+// eslint-disable-next-line no-new-func
 const importDynamic = new Function('modulePath', 'return import(modulePath)')
 
 async function retrieveIndex(

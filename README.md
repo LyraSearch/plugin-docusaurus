@@ -10,7 +10,21 @@ To test running the plugin locally run:
 
 ```
 npm i
-npm run build && npm run serve
+npm run build-serve
+```
+
+## Usage
+
+Install the plugin:
+
+```bash
+npm install --save @lyrasearch/docusaurus-lyra-search-plugin
+```
+
+Add the plugin to your `docusaurus.config.js`:
+
+```js
+plugins: ['@lyrasearch/docusaurus-lyra-search-plugin']
 ```
 
 ## Local development
