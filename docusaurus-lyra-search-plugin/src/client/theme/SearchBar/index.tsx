@@ -112,7 +112,6 @@ export default function SearchBar() {
                       }))
                   )
                 )
-                console.log(processed)
                 return processed
               },
               getItemUrl({ item }: { item: ResolveSchema<SectionSchema> }) {
