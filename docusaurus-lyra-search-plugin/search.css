@@ -1,3 +1,8 @@
+:root {
+  /* TODO  relate this to docusarus css vars (which are hex values) */
+  --aa-primary-color-rgb: var(--aa-text-color-rgb);
+}
+
 .aa-DetachedSearchButton {
   border-radius: 9999px;
   height: 36px;
