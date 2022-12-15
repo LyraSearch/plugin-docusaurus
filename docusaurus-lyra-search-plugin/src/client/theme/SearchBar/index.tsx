@@ -1,4 +1,8 @@
-import { autocomplete, AutocompleteComponents } from '@algolia/autocomplete-js'
+import {
+  autocomplete,
+  AutocompleteComponents,
+  Render
+} from '@algolia/autocomplete-js'
 import '@algolia/autocomplete-theme-classic/dist/theme.min.css'
 import React, { createElement, Fragment, useEffect, useRef } from 'react'
 import { render } from 'react-dom'
@@ -35,6 +39,22 @@ const templates = {
       </a>
     )
   }
+}
+
+function renderNotEnabledMessage(
+  { render }: { render: Render },
+  root: HTMLElement
+) {
+  render(
+    <>
+      <div className="aa-PanelLayout aa-Panel--scrollable">
+        No search data available, lyra search is only available on production
+        builds.
+      </div>
+      <Footer />
+    </>,
+    root
+  )
 }
 
 export default function SearchBar() {
@@ -87,22 +107,11 @@ export default function SearchBar() {
           root
         )
       },
-      renderNoResults({ state, render }, root) {
-        if (!state.collections.length) {
-          render(
-            <>
-              <div style={{ padding: '1rem' }}>
-                No search data available, lyra search is only available on
-                production builds.
-              </div>
-              <Footer />
-            </>,
-            root
-          )
-        }
-      }
+      renderNoResults:
+        process.env.NODE_ENV === 'production'
+          ? undefined
+          : renderNotEnabledMessage
     })
-
     return () => {
       search.destroy()
     }
