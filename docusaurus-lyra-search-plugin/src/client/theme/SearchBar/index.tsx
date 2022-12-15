@@ -112,6 +112,7 @@ export default function SearchBar() {
                       }))
                   )
                 )
+
                 return processed
               },
               getItemUrl({ item }: { item: ResolveSchema<SectionSchema> }) {
