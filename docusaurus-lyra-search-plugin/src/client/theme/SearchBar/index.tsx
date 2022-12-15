@@ -1,4 +1,8 @@
-import { autocomplete, AutocompleteComponents } from '@algolia/autocomplete-js'
+import {
+  autocomplete,
+  AutocompleteComponents,
+  Render
+} from '@algolia/autocomplete-js'
 import '@algolia/autocomplete-theme-classic/dist/theme.min.css'
 import React, { createElement, Fragment, useEffect, useRef } from 'react'
 import { render } from 'react-dom'
@@ -9,7 +13,7 @@ import { ResolveSchema } from '@lyrasearch/lyra/dist/esm/src/types'
 import { SectionSchema } from '../../../types'
 import { useColorMode } from '@docusaurus/theme-common'
 import { Footer } from './Footer'
-import '@docsearch/css'
+import '../../../../search.css'
 
 // components.Snippet just truncates here, it doesn't actually truncate to the content near the hit
 const templates = {
@@ -34,10 +38,23 @@ const templates = {
         </div>
       </a>
     )
-  },
-  footer() {
-    return <Footer />
   }
+}
+
+function renderNotEnabledMessage(
+  { render }: { render: Render },
+  root: HTMLElement
+) {
+  render(
+    <>
+      <div className="aa-PanelLayout aa-Panel--scrollable">
+        No search data available, lyra search is only available on production
+        builds.
+      </div>
+      <Footer />
+    </>,
+    root
+  )
 }
 
 export default function SearchBar() {
@@ -79,22 +96,22 @@ export default function SearchBar() {
           return []
         }
       },
-      renderNoResults({ state, render }, root) {
-        if (!state.collections.length) {
-          render(
-            <>
-              <div style={{ padding: '1rem' }}>
-                No search data available, lyra search is only available on
-                production builds.
-              </div>
-              <Footer />
-            </>,
-            root
-          )
-        }
-      }
+      render({ sections, render }, root) {
+        render(
+          <>
+            <div className="aa-PanelLayout aa-Panel--scrollable">
+              {sections}
+            </div>
+            <Footer />
+          </>,
+          root
+        )
+      },
+      renderNoResults:
+        process.env.NODE_ENV === 'production'
+          ? undefined
+          : renderNotEnabledMessage
     })
-
     return () => {
       search.destroy()
     }
