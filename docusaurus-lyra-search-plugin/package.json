@@ -50,6 +50,6 @@
     "@docusaurus/theme-common": "^2.2.0",
     "@lyrasearch/lyra": "^0.3.1",
     "@lyrasearch/plugin-match-highlight": "^0.0.3",
-    "@lyrasearch/plugin-parsedoc": "^0.0.4"
+    "@lyrasearch/plugin-parsedoc": "^0.0.5"
   }
 }
