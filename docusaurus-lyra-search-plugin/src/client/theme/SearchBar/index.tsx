@@ -1,8 +1,4 @@
-import {
-  autocomplete,
-  AutocompleteComponents,
-  Render
-} from '@algolia/autocomplete-js'
+import { autocomplete, Render } from '@algolia/autocomplete-js'
 import '@algolia/autocomplete-theme-classic/dist/theme.min.css'
 import React, { createElement, Fragment, useEffect, useRef } from 'react'
 import { render } from 'react-dom'
@@ -14,16 +10,12 @@ import { SectionSchema } from '../../../types'
 import { useColorMode } from '@docusaurus/theme-common'
 import { Footer } from './Footer'
 import '../../../../search.css'
+import { Position } from '@lyrasearch/plugin-match-highlight'
 
-// components.Snippet just truncates here, it doesn't actually truncate to the content near the hit
+type Hit = ResolveSchema<SectionSchema> & { position: Position }
+
 const templates = {
-  item({
-    item,
-    components
-  }: {
-    item: ResolveSchema<SectionSchema>
-    components: AutocompleteComponents
-  }) {
+  item({ item }: { item: Hit }) {
     return (
       <a className="aa-ItemLink" href={item.pageRoute}>
         <div className="aa-ItemContent">
@@ -31,9 +23,7 @@ const templates = {
             <div className="aa-ItemContentTitle">
               <h5 style={{ marginBottom: 0 }}>{item.sectionTitle}</h5>
             </div>
-            <div className="aa-ItemContentDescription">
-              <components.Snippet hit={item} attribute="sectionContent" />
-            </div>
+            <div className="aa-ItemContentDescription">{snippet(item)}</div>
           </div>
         </div>
       </a>
@@ -54,6 +44,36 @@ function renderNotEnabledMessage(
       <Footer />
     </>,
     root
+  )
+}
+
+function snippet(item: Hit) {
+  const PADDING = 20
+  const PADDING_MARKER = '...'
+  const isBeginning = item.position.start < PADDING
+  const isEnd =
+    item.position.start + item.position.length >
+    item.sectionContent.length - PADDING
+  const preMatch = item.sectionContent.substring(
+    isBeginning ? 0 : item.position.start - PADDING,
+    item.position.start
+  )
+  const match = item.sectionContent.substring(
+    item.position.start,
+    item.position.start + item.position.length
+  )
+  const postMatch = item.sectionContent.substring(
+    item.position.start + item.position.length,
+    item.position.start + item.position.length + PADDING
+  )
+  return (
+    <p>
+      {isBeginning ? '' : PADDING_MARKER}
+      {preMatch}
+      <u>{match}</u>
+      {postMatch}
+      {isEnd ? '' : PADDING_MARKER}
+    </p>
   )
 }
 
@@ -83,7 +103,17 @@ export default function SearchBar() {
               sourceId: 'lyra',
               getItems() {
                 const results = lyraSearch(query)
-                return results.hits.map(hit => hit.document)
+                const processed = results.flatMap(hit =>
+                  Object.values(hit.positions.sectionContent).flatMap(
+                    positions =>
+                      positions.map(position => ({
+                        ...hit.document,
+                        position
+                      }))
+                  )
+                )
+                console.log(processed)
+                return processed
               },
               getItemUrl({ item }: { item: ResolveSchema<SectionSchema> }) {
                 return item.pageRoute

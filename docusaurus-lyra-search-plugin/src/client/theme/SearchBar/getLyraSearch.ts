@@ -1,26 +1,36 @@
-import { create, insert, search, SearchResult } from '@lyrasearch/lyra'
-import { ResolveSchema } from '@lyrasearch/lyra/dist/esm/src/types'
+import { create, insertWithHooks } from '@lyrasearch/lyra'
+import { ResolveSchema } from '@lyrasearch/lyra/dist/cjs/src/types'
+import {
+  afterInsert,
+  LyraWithHighlight,
+  SearchResultWithHighlight,
+  searchWithHighlight
+} from '@lyrasearch/plugin-match-highlight'
 import { SectionSchema } from '../../../types'
 
-let searchFn: (term: string) => SearchResult<SectionSchema>
+let searchFn: (term: string) => SearchResultWithHighlight<SectionSchema>[]
 
 export const getLyraSearch = async (baseUrl: string) => {
   if (!searchFn) {
-    const indexData = await fetch(`${baseUrl}lyra-search-index.json`).then(
-      result => result.json()
-    )
+    const indexData = await (
+      await fetch(`${baseUrl}lyra-search-index.json`)
+    ).json()
     const db = create<SectionSchema>({
       schema: {
         pageRoute: 'string',
         sectionTitle: 'string',
         sectionContent: 'string',
         type: 'string'
+      },
+      hooks: {
+        afterInsert
       }
-    })
+    }) as LyraWithHighlight<SectionSchema>
     indexData.forEach((record: ResolveSchema<SectionSchema>) =>
-      insert(db, record)
+      insertWithHooks(db, record)
     )
-    searchFn = (term: string) => search(db, { term, properties: '*' })
+    searchFn = (term: string) =>
+      searchWithHighlight(db, { term, properties: '*' })
   }
   return searchFn
 }

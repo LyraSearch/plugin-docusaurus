@@ -2,6 +2,22 @@
 
 # Docusaurus Lyra Search Plugin
 
+## Usage
+
+Install the plugin:
+
+```bash
+npm install --save @lyrasearch/docusaurus-lyra-search-plugin
+```
+
+Add the plugin to your `docusaurus.config.js`:
+
+```js
+plugins: ['@lyrasearch/docusaurus-lyra-search-plugin']
+```
+
+## Testing the plugin Locally
+
 This is a Docusaurus Search Plugin powered by LyraJS.
 
 The plugin can be found in `./docusaurus-lyra-search-plugin`. A "fresh" docusaurus app can be found in `./website` with the plugin configured.
@@ -10,8 +26,9 @@ To test running the plugin locally run:
 
 ```
 npm i
-npm run build && npm run serve
+npm run build-serve
 ```
+
 
 ## Local development
 
