@@ -33,6 +33,13 @@
     "prettier": "^2.7.1"
   },
   "lint-staged": {
-    "*.{js,jsx}": "eslint --cache --fix"
+    "*.{ts, tsx}": "eslint ./plugin-docusaurus --cache --fix"
+  },
+  "scripts": {
+    "lint": "eslint ./plugin-docusaurus",
+    "build": "npm --prefix plugin-docusaurus run build && npm --prefix website run build",
+    "serve": "npm --prefix website run serve",
+    "build-serve": "npm run build && npm run serve",
+    "test": ""
   }
 }

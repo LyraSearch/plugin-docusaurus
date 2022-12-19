@@ -20,7 +20,7 @@ jobs:
       - name: Build website
         run: npm run build
         env:
-          ORGANIZATION_NAME: nearform
+          ORGANIZATION_NAME: lyrasearch
           PROJECT_NAME: plugin-docusaurus
           DEPLOYMENT_BRANCH: gh-pages
 

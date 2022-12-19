@@ -35,3 +35,9 @@ npm i
 cd website
 npm run build && npm run serve
 ```
+
+**Note** the plugin generates the search index in the `postBuild` lifecycle of docusaurus plugins. This only runs on production builds, not when running locally with a dev server. So search results will only be populated on production builds
+
+You can use the watch scripts in the `plugin-docusaurus` package to recompile the source code for the plugin.
+
+If you need search results you will need to re-run the docusaurus build and serve commands every time you make a change to the plugin. If you don't need search results you can just run `npm start` in the `website` plus whichever watch scripts you need from the plugin and you will get hot reloads in the docusaurus app.

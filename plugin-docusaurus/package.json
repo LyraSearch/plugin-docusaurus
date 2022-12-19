@@ -2,18 +2,22 @@
   "name": "@lyrasearch/plugin-docusaurus",
   "version": "0.0.1-beta-1",
   "description": "Docusaurus plugin for local search powered by lyra",
-  "main": "src/server/index.js",
+  "main": "lib/server/index.js",
   "scripts": {
-    "build": "vite build",
-    "test": "echo \"Error: no test specified\" && exit 0"
+    "build": "rm -rf lib && npm run build:client && npm run build:server",
+    "build:client": "tsc --project tsconfig.client.json ",
+    "build:server": "tsc --project tsconfig.server.json",
+    "watch:client": "tsc --watch --project tsconfig.client.json",
+    "watch:server": "tsc --watch --project tsconfig.server.json",
+    "test": ""
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lyrasearch/plugin-docusaurus.git"
   },
   "files": [
-    "/src",
     "/translationMessages",
+    "/lib",
     "/README.md"
   ],
   "publishConfig": {
@@ -30,26 +34,21 @@
   },
   "homepage": "https://github.com/lyrasearch/plugin-docusaurus#readme",
   "devDependencies": {
-    "@docusaurus/core": "^2.1.0",
-    "@docusaurus/module-type-aliases": "^2.1.0",
-    "@docusaurus/plugin-content-blog": "^2.1.0",
-    "@docusaurus/plugin-content-docs": "^2.1.0",
-    "@docusaurus/plugin-content-pages": "^2.1.0",
-    "@docusaurus/preset-classic": "^2.1.0",
-    "@docusaurus/theme-classic": "^2.1.0",
-    "@docusaurus/theme-common": "^2.1.0",
-    "@docusaurus/types": "^2.1.0"
+    "@docusaurus/module-type-aliases": "^2.2.0",
+    "@docusaurus/types": "^2.2.0",
+    "@types/react-dom": "^18.0.9",
+    "typescript": "^4.9.4"
   },
   "peerDependencies": {
-    "@docusaurus/core": "^2.1.0"
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
   },
   "dependencies": {
     "@algolia/autocomplete-js": "^1.7.2",
-    "@algolia/autocomplete-plugin-recent-searches": "^1.7.2",
-    "@algolia/autocomplete-theme-classic": "^1.7.2",
-    "@lyrasearch/lyra": "^0.2.6",
-    "@lyrasearch/plugin-parsedoc": "^0.0.5",
-    "cheerio": "^1.0.0-rc.12",
-    "pino": "^8.6.1"
+    "@algolia/autocomplete-theme-classic": "^1.7.3",
+    "@docusaurus/theme-common": "^2.2.0",
+    "@lyrasearch/lyra": "^0.3.1",
+    "@lyrasearch/plugin-match-highlight": "^0.0.3",
+    "@lyrasearch/plugin-parsedoc": "^0.0.5"
   }
 }
