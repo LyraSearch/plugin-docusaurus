@@ -1,7 +1,7 @@
 {
-  "docusaurus-lyra-search-plugin.searchBar.placeholder": "Search...",
-  "docusaurus-lyra-search-plugin.searchBar.noResults": "No results found.",
-  "docusaurus-lyra-search-plugin.searchBar.clearButtonTitle": "Clear",
-  "docusaurus-lyra-search-plugin.searchBar.detachedCancelButtonText": "Cancel",
-  "docusaurus-lyra-search-plugin.searchBar.submitButtonTitle": "Submit"
+  "plugin-docusaurus.searchBar.placeholder": "Search...",
+  "plugin-docusaurus.searchBar.noResults": "No results found.",
+  "plugin-docusaurus.searchBar.clearButtonTitle": "Clear",
+  "plugin-docusaurus.searchBar.detachedCancelButtonText": "Cancel",
+  "plugin-docusaurus.searchBar.submitButtonTitle": "Submit"
 }

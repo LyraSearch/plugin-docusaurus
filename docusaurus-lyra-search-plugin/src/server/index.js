@@ -14,7 +14,7 @@ const {
 } = require('./indexableRoutes')
 const { html2text, getDocusaurusTag } = require('./parseUtils')
 
-const PLUGIN_NAME = '@lyrasearch/docusaurus-lyra-search-plugin'
+const PLUGIN_NAME = '@lyrasearch/plugin-docusaurus'
 const generateReadPromises = async ({ file, url, type }) => {
   logger.debug(`Parsing ${type} file ${file}`, { url })
   const html = await readFile(file, { encoding: 'utf8' })

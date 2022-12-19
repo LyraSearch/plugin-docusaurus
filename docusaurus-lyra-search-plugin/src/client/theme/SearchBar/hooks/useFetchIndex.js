@@ -12,7 +12,7 @@ const useFetchIndex = ({ baseUrl }) => {
       fetch(`${baseUrl}lyra-search-index.json`)
         .then(result => result.json())
         .catch(() => {
-          console.error("docusaurus-lyra-search-plugin: couldn't fetch index")
+          console.error("plugin-docusaurus: couldn't fetch index")
           return []
         })
         .then(setIndex)

@@ -1,5 +1,5 @@
 const pino = require('pino')
 
-const logger = pino({ name: 'docusaurus-lyra-search-plugin' })
+const logger = pino({ name: 'plugin-docusaurus' })
 
 module.exports = logger
