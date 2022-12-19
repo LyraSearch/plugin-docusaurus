@@ -1,13 +1,14 @@
 {
-  "name": "docusaurus-lyra-search-plugin",
+  "name": "@lyrasearch/plugin-docusaurus",
+  "version": "0.0.1-beta-1",
   "private": true,
   "workspaces": [
     "website",
-    "docusaurus-lyra-search-plugin"
+    "plugin-docusaurus"
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nearform/docusaurus-lyra-search-plugin.git"
+    "url": "git+https://github.com/lyrasearch/plugin-docusaurus.git"
   },
   "files": [
     "/src",
@@ -16,9 +17,9 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/nearform/docusaurus-lyra-search-plugin/issues"
+    "url": "https://github.com/lyrasearch/plugin-docusaurus/issues"
   },
-  "homepage": "https://github.com/nearform/docusaurus-lyra-search-plugin#readme",
+  "homepage": "https://github.com/lyrasearch/plugin-docusaurus#readme",
   "devDependencies": {
     "@commitlint/cli": "^17.3.0",
     "@commitlint/config-conventional": "^17.3.0",
@@ -32,11 +33,11 @@
     "prettier": "^2.8.1"
   },
   "lint-staged": {
-    "*.{ts, tsx}": "eslint ./docusaurus-lyra-search-plugin --cache --fix"
+    "*.{ts, tsx}": "eslint ./plugin-docusaurus --cache --fix"
   },
   "scripts": {
-    "lint": "eslint ./docusaurus-lyra-search-plugin",
-    "build": "npm --prefix docusaurus-lyra-search-plugin run build && npm --prefix website run build",
+    "lint": "eslint ./plugin-docusaurus",
+    "build": "npm --prefix plugin-docusaurus run build && npm --prefix website run build",
     "serve": "npm --prefix website run serve",
     "build-serve": "npm run build && npm run serve",
     "test": ""

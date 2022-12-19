@@ -1,5 +1,5 @@
 {
-  "references": [{ "path": "./docusaurus-lyra-search-plugin" }],
+  "references": [{ "path": "./plugin-docusaurus" }],
   "files": [],
   "include": [],
   "exclude": ["**/node_modules"],

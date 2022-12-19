@@ -9,7 +9,7 @@ const config = {
   title: 'My Site',
   tagline: 'Dinosaurs are cool',
   url: 'https://your-docusaurus-test-site.com',
-  baseUrl: '/docusaurus-lyra-search-plugin/',
+  baseUrl: '/plugin-docusaurus/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
@@ -26,7 +26,7 @@ const config = {
     defaultLocale: 'en',
     locales: ['en']
   },
-  plugins: ['@lyrasearch/docusaurus-lyra-search-plugin'],
+  plugins: ['@lyrasearch/plugin-docusaurus'],
   presets: [
     [
       'classic',

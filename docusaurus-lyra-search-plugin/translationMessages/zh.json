@@ -1,7 +1,0 @@
-{
-  "docusaurus-lyra-search-plugin.searchBar.placeholder": "搜索...",
-  "docusaurus-lyra-search-plugin.searchBar.noResults": "无搜索结果",
-  "docusaurus-lyra-search-plugin.searchBar.clearButtonTitle": "清除",
-  "docusaurus-lyra-search-plugin.searchBar.detachedCancelButtonText": "取消",
-  "docusaurus-lyra-search-plugin.searchBar.submitButtonTitle": "搜索"
-}

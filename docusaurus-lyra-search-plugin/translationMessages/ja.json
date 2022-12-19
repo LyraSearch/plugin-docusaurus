@@ -1,7 +1,0 @@
-{
-  "docusaurus-lyra-search-plugin.searchBar.placeholder": "検索...",
-  "docusaurus-lyra-search-plugin.searchBar.noResults": "該当する結果はありません。",
-  "docusaurus-lyra-search-plugin.searchBar.clearButtonTitle": "Clear",
-  "docusaurus-lyra-search-plugin.searchBar.detachedCancelButtonText": "Cancel",
-  "docusaurus-lyra-search-plugin.searchBar.submitButtonTitle": "Submit"
-}
