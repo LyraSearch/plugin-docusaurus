@@ -8,7 +8,7 @@ import { SectionSchema } from '../types'
 import { ResolveSchema } from '@lyrasearch/lyra/dist/esm/src/types'
 import { defaultHtmlSchema } from '@lyrasearch/plugin-parsedoc'
 
-const PLUGIN_NAME = '@lyrasearch/docusaurus-lyra-search-plugin'
+const PLUGIN_NAME = '@lyrasearch/plugin-docusaurus'
 const getThemePath = () => resolve(__dirname, '..', 'client', 'theme')
 const docusaurusLyraSearchPlugin = (
   docusaurusContext: LoadContext

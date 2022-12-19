@@ -21,7 +21,7 @@ jobs:
         run: npm run build
         env:
           ORGANIZATION_NAME: nearform
-          PROJECT_NAME: docusaurus-lyra-search-plugin
+          PROJECT_NAME: plugin-docusaurus
           DEPLOYMENT_BRANCH: gh-pages
 
 
