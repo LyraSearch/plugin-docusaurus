@@ -1,13 +1,14 @@
 {
-  "name": "docusaurus-lyra-search-plugin",
+  "name": "@lyrasearch/plugin-docusaurus",
+  "version": "0.0.1-beta-1",
   "private": true,
   "workspaces": [
     "website",
-    "docusaurus-lyra-search-plugin"
+    "plugin-docusaurus"
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nearform/docusaurus-lyra-search-plugin.git"
+    "url": "git+https://github.com/lyrasearch/plugin-docusaurus.git"
   },
   "files": [
     "/src",
@@ -16,29 +17,22 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/nearform/docusaurus-lyra-search-plugin/issues"
+    "url": "https://github.com/lyrasearch/plugin-docusaurus/issues"
   },
-  "homepage": "https://github.com/nearform/docusaurus-lyra-search-plugin#readme",
+  "homepage": "https://github.com/lyrasearch/plugin-docusaurus#readme",
   "devDependencies": {
-    "@commitlint/cli": "^17.3.0",
-    "@commitlint/config-conventional": "^17.3.0",
-    "eslint": "^8.29.0",
+    "@commitlint/cli": "^17.1.2",
+    "@commitlint/config-conventional": "^17.1.0",
+    "eslint": "^8.25.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-config-react-app": "^7.0.1",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.31.8",
     "husky": "^8.0.1",
-    "lint-staged": "^13.1.0",
-    "prettier": "^2.8.1"
+    "lint-staged": "^13.0.3",
+    "prettier": "^2.7.1"
   },
   "lint-staged": {
-    "*.{ts, tsx}": "eslint ./docusaurus-lyra-search-plugin --cache --fix"
-  },
-  "scripts": {
-    "lint": "eslint ./docusaurus-lyra-search-plugin",
-    "build": "npm --prefix docusaurus-lyra-search-plugin run build && npm --prefix website run build",
-    "serve": "npm --prefix website run serve",
-    "build-serve": "npm run build && npm run serve",
-    "test": ""
+    "*.{js,jsx}": "eslint --cache --fix"
   }
 }

@@ -26,7 +26,7 @@ const config = {
     defaultLocale: 'en',
     locales: ['en']
   },
-  plugins: ['@lyrasearch/docusaurus-lyra-search-plugin'],
+  plugins: ['@lyrasearch/plugin-docusaurus'],
   presets: [
     [
       'classic',

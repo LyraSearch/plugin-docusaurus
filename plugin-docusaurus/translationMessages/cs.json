@@ -1,7 +1,7 @@
 {
-  "docusaurus-lyra-search-plugin.searchBar.placeholder": "Vyhledat...",
-  "docusaurus-lyra-search-plugin.searchBar.noResults": "Nenalezeny žádné výsledky.",
-  "docusaurus-lyra-search-plugin.searchBar.clearButtonTitle": "Vymazat",
-  "docusaurus-lyra-search-plugin.searchBar.detachedCancelButtonText": "Zrušit",
-  "docusaurus-lyra-search-plugin.searchBar.submitButtonTitle": "Potvrdit"
+  "plugin-docusaurus.searchBar.placeholder": "Vyhledat...",
+  "plugin-docusaurus.searchBar.noResults": "Nenalezeny žádné výsledky.",
+  "plugin-docusaurus.searchBar.clearButtonTitle": "Vymazat",
+  "plugin-docusaurus.searchBar.detachedCancelButtonText": "Zrušit",
+  "plugin-docusaurus.searchBar.submitButtonTitle": "Potvrdit"
 }

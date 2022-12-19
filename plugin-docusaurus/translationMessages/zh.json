@@ -1,7 +1,7 @@
 {
-  "docusaurus-lyra-search-plugin.searchBar.placeholder": "搜索...",
-  "docusaurus-lyra-search-plugin.searchBar.noResults": "无搜索结果",
-  "docusaurus-lyra-search-plugin.searchBar.clearButtonTitle": "清除",
-  "docusaurus-lyra-search-plugin.searchBar.detachedCancelButtonText": "取消",
-  "docusaurus-lyra-search-plugin.searchBar.submitButtonTitle": "搜索"
+  "plugin-docusaurus.searchBar.placeholder": "搜索...",
+  "plugin-docusaurus.searchBar.noResults": "无搜索结果",
+  "plugin-docusaurus.searchBar.clearButtonTitle": "清除",
+  "plugin-docusaurus.searchBar.detachedCancelButtonText": "取消",
+  "plugin-docusaurus.searchBar.submitButtonTitle": "搜索"
 }
