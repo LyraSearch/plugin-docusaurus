@@ -1,5 +1,11 @@
 {
-  "extends": ["eslint:recommended", "plugin:prettier/recommended", "plugin:react/recommended", "plugin:react/jsx-runtime", "react-app"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:prettier/recommended",
+    "plugin:react/recommended",
+    "plugin:react/jsx-runtime",
+    "react-app"
+  ],
   "env": {
     "node": true,
     "es2021": true
@@ -9,6 +15,17 @@
     "sourceType": "module"
   },
   "rules": {
-    "react/prop-types": 0
+    "react/prop-types": 0,
+    "import/no-unresolved": [
+      0,
+      {
+        "ignore": [
+          "^@theme",
+          "^@docusaurus",
+          "^@generated",
+          "lib"
+        ]
+      }
+    ]
   }
 }
