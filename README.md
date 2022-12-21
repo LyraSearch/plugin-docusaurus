@@ -41,3 +41,7 @@ npm run build && npm run serve
 You can use the watch scripts in the `plugin-docusaurus` package to recompile the source code for the plugin.
 
 If you need search results you will need to re-run the docusaurus build and serve commands every time you make a change to the plugin. If you don't need search results you can just run `npm start` in the `website` plus whichever watch scripts you need from the plugin and you will get hot reloads in the docusaurus app.
+
+# License
+
+Licensed under the [Apache 2.0](/LICENSE.md) license.

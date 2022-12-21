@@ -1,6 +1,6 @@
 {
   "name": "@lyrasearch/plugin-docusaurus",
-  "version": "0.0.1-beta.1",
+  "version": "0.0.0",
   "private": true,
   "workspaces": [
     "website",
@@ -10,12 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/lyrasearch/plugin-docusaurus.git"
   },
-  "files": [
-    "/src",
-    "/translationMessages",
-    "/README.md"
-  ],
-  "license": "MIT",
+  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/lyrasearch/plugin-docusaurus/issues"
   },
