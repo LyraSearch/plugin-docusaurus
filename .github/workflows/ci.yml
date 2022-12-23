@@ -22,6 +22,7 @@ jobs:
           pnpm install --frozen-lockfile
           pnpm run lint
           pnpm run test
+          pnpm run build
   automerge:
     name: Merge dependabot's PRs
     needs: test
