@@ -35,7 +35,7 @@
     "build": "npm --prefix plugin-docusaurus run build && npm --prefix website run build",
     "serve": "npm --prefix website run serve",
     "build-serve": "npm run build && npm run serve",
-    "test": ""
+    "test": "exit 0"
   },
   "pnpm": {
     "peerDependencyRules": {
