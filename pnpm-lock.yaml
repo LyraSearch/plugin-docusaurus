@@ -38,6 +38,7 @@ importers:
       '@lyrasearch/plugin-match-highlight': ^0.0.3
       '@lyrasearch/plugin-parsedoc': ^0.0.5
       '@types/node': ^18.11.17
+      '@types/react': ^18.0.26
       '@types/react-dom': ^18.0.9
       react: ^17.0.2
       react-dom: ^17.0.2
@@ -55,6 +56,7 @@ importers:
       '@docusaurus/module-type-aliases': 2.2.0_sfoxds7t5ydpegc3knd667wn6m
       '@docusaurus/types': 2.2.0_sfoxds7t5ydpegc3knd667wn6m
       '@types/node': 18.11.17
+      '@types/react': 18.0.26
       '@types/react-dom': 18.0.10
       typescript: 4.9.4
 
