@@ -1,20 +1,21 @@
 name: Deploy to GitHub Pages
-
 on:
   push:
     branches:
       - master
-
 jobs:
   deploy:
     name: Deploy to GitHub Pages
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 7
       - uses: actions/setup-node@v3
         with:
           node-version-file: '.nvmrc'
-
+          cache: 'pnpm'
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
       - name: Build website
@@ -23,8 +24,6 @@ jobs:
           ORGANIZATION_NAME: lyrasearch
           PROJECT_NAME: plugin-docusaurus
           DEPLOYMENT_BRANCH: gh-pages
-
-
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:

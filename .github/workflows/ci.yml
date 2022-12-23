@@ -1,26 +1,27 @@
 name: Continuous Integration
-
 on: 
   push:
     branches:
       - master
   pull_request:
-
 jobs:
   test:
     name: Lint and test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 7
       - uses: actions/setup-node@v3
         with:
           node-version-file: '.nvmrc'
+          cache: 'pnpm'
       - run: |
           pnpm install --frozen-lockfile
           pnpm run lint
           pnpm run test
           pnpm run build
-
   automerge:
     name: Merge dependabot's PRs
     needs: test
