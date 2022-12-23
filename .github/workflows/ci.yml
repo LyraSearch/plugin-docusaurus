@@ -18,6 +18,7 @@ jobs:
           node-version-file: '.nvmrc'
           cache: 'pnpm'
       - run: |
+          pnpm config set auto-install-peers true
           pnpm install --frozen-lockfile
           pnpm run lint
           pnpm run test

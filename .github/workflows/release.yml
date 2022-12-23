@@ -26,4 +26,6 @@ jobs:
         with:
           semver: ${{ github.event.inputs.semver }}
           commit-message: 'chore: release {version}'
-          build-command: pnpm install --frozen-lockfile
+          build-command: |
+            pnpm config set auto-install-peers true
+            pnpm install --frozen-lockfile
