@@ -18,6 +18,7 @@
   "files": [
     "/translationMessages",
     "/lib",
+    "/*.css",
     "/README.md"
   ],
   "publishConfig": {

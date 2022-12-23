@@ -36,5 +36,15 @@
     "serve": "npm --prefix website run serve",
     "build-serve": "npm run build && npm run serve",
     "test": ""
+  },
+  "pnpm": {
+    "peerDependencyRules": {
+      "ignoreMissing": [
+        "typescript"
+      ]
+    }
+  },
+  "publishConfig": {
+    "directory": "plugin-docusaurus"
   }
 }
