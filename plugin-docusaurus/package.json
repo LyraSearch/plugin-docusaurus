@@ -4,6 +4,7 @@
   "description": "Docusaurus plugin for local search powered by lyra",
   "main": "lib/server/index.js",
   "scripts": {
+    "prepare": "husky install && npm run build",
     "build": "rm -rf lib && npm run build:client && npm run build:server",
     "build:client": "tsc --project tsconfig.client.json ",
     "build:server": "tsc --project tsconfig.server.json",
