@@ -23,4 +23,4 @@ jobs:
         with:
           semver: ${{ github.event.inputs.semver }}
           commit-message: 'chore: release {version}'
-          build-command: npm ci
+          build-command: pnpm install --frozen-lockfile

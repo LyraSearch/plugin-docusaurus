@@ -2,8 +2,8 @@ name: Continuous Integration
 
 on: 
   push:
-   branches:
-    - master
+    branches:
+      - master
   pull_request:
 
 jobs:
@@ -16,10 +16,10 @@ jobs:
         with:
           node-version-file: '.nvmrc'
       - run: |
-          npm ci
-          npm run lint
-          npm test
-          npm run build
+          pnpm install --frozen-lockfile
+          pnpm run lint
+          pnpm run test
+          pnpm run build
 
   automerge:
     name: Merge dependabot's PRs
