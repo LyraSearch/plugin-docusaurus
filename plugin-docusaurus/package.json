@@ -1,10 +1,10 @@
 {
   "name": "@lyrasearch/plugin-docusaurus",
-  "version": "0.0.0-beta.3",
+  "version": "0.0.0-beta.4",
   "description": "Docusaurus plugin for local search powered by lyra",
   "main": "lib/server/index.js",
   "scripts": {
-    "build": "rm -rf lib && npm run build:client && npm run build:server && mv ./src/client/theme/SearchBar/search.css ./lib/client/theme/SearchBar/search.css && mv ./src/client/theme/SearchBar/styles.module.css ./lib/client/theme/SearchBar/styles.module.css",
+    "build": "rm -rf lib && npm run build:client && npm run build:server && cp ./src/client/theme/SearchBar/search.css ./lib/client/theme/SearchBar/search.css && cp ./src/client/theme/SearchBar/styles.module.css ./lib/client/theme/SearchBar/styles.module.css",
     "build:client": "tsc --project tsconfig.client.json ",
     "build:server": "tsc --project tsconfig.server.json",
     "watch:client": "tsc --watch --project tsconfig.client.json",
