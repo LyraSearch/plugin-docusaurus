@@ -1,7 +1,7 @@
 {
   "name": "@lyrasearch/plugin-docusaurus",
-  "version": "0.0.0",
-  "private": true,
+  "version": "0.0.0-beta.2",
+  "private": false,
   "workspaces": [
     "website",
     "plugin-docusaurus"
