@@ -11,7 +11,7 @@ import { defaultHtmlSchema } from '@lyrasearch/plugin-parsedoc'
 const PLUGIN_NAME = '@lyrasearch/plugin-docusaurus'
 const getThemePath = () => resolve(__dirname, '..', 'client', 'theme')
 const docusaurusLyraSearchPlugin = (
-  docusaurusContext: LoadContext,
+  docusaurusContext: LoadContext
 ): Plugin => ({
   name: PLUGIN_NAME,
   getThemePath,
