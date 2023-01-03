@@ -9,8 +9,8 @@ import { ResolveSchema } from '@lyrasearch/lyra/dist/esm/src/types'
 import { SectionSchema } from '../../../types'
 import { useColorMode } from '@docusaurus/theme-common'
 import { Footer } from './Footer'
-import '../../../../search.css'
 import { Position } from '@lyrasearch/plugin-match-highlight'
+import './search.css'
 
 type Hit = ResolveSchema<SectionSchema> & { position: Position }
 
