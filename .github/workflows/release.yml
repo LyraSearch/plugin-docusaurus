@@ -19,8 +19,13 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 7
       - uses: nearform/optic-release-automation-action@v4
         with:
           semver: ${{ github.event.inputs.semver }}
           commit-message: 'chore: release {version}'
-          build-command: npm ci
+          build-command: |
+            pnpm config set auto-install-peers true
+            pnpm install --frozen-lockfile
