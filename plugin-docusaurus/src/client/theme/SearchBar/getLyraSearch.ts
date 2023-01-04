@@ -10,11 +10,11 @@ import { SectionSchema } from '../../../types'
 
 let searchFn: (term: string) => SearchResultWithHighlight<SectionSchema>[]
 
-export const getLyraSearch = async (baseUrl: string) => {
+export const getLyraSearch = async (baseUrl: string, indexData?: any) => {
   if (!searchFn) {
-    const indexData = await (
-      await fetch(`${baseUrl}lyra-search-index.json`)
-    ).json()
+    indexData =
+      indexData ||
+      (await (await fetch(`${baseUrl}lyra-search-index.json`)).json())
     const db = create<SectionSchema>({
       schema: {
         pageRoute: 'string',

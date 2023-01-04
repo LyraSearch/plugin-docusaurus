@@ -1,4 +1,4 @@
-import { autocomplete, Render } from '@algolia/autocomplete-js'
+import { autocomplete } from '@algolia/autocomplete-js'
 import '@algolia/autocomplete-theme-classic/dist/theme.min.css'
 import React, { createElement, Fragment, useEffect, useRef } from 'react'
 import { render } from 'react-dom'
@@ -11,6 +11,7 @@ import { useColorMode } from '@docusaurus/theme-common'
 import { Footer } from './Footer'
 import { Position } from '@lyrasearch/plugin-match-highlight'
 import './search.css'
+import { usePluginData } from '@docusaurus/useGlobalData'
 
 type Hit = ResolveSchema<SectionSchema> & { position: Position }
 
@@ -29,22 +30,6 @@ const templates = {
       </a>
     )
   }
-}
-
-function renderNotEnabledMessage(
-  { render }: { render: Render },
-  root: HTMLElement
-) {
-  render(
-    <>
-      <div className="aa-PanelLayout aa-Panel--scrollable">
-        No search data available, lyra search is only available on production
-        builds.
-      </div>
-      <Footer />
-    </>,
-    root
-  )
 }
 
 function snippet(item: Hit) {
@@ -82,6 +67,7 @@ export default function SearchBar() {
   const { siteConfig } = useDocusaurusContext()
   const containerRef = useRef(null)
   const { colorMode } = useColorMode()
+  const indexData = usePluginData('@lyrasearch/plugin-docusaurus')
 
   useEffect(() => {
     if (!containerRef.current || !isBrowser) {
@@ -95,36 +81,30 @@ export default function SearchBar() {
       openOnFocus: true,
       detachedMediaQuery: '', // always detached
       async getSources({ query }): Promise<any> {
-        try {
-          const lyraSearch = await getLyraSearch(siteConfig.baseUrl)
+        const lyraSearch = await getLyraSearch(siteConfig.baseUrl, indexData)
 
-          return [
-            {
-              sourceId: 'lyra',
-              getItems() {
-                const results = lyraSearch(query)
-                const processed = results.flatMap(hit =>
-                  Object.values(hit.positions.sectionContent).flatMap(
-                    positions =>
-                      positions.map(position => ({
-                        ...hit.document,
-                        position
-                      }))
-                  )
+        return [
+          {
+            sourceId: 'lyra',
+            getItems() {
+              const results = lyraSearch(query)
+              const processed = results.flatMap(hit =>
+                Object.values(hit.positions.sectionContent).flatMap(positions =>
+                  positions.map(position => ({
+                    ...hit.document,
+                    position
+                  }))
                 )
+              )
 
-                return processed
-              },
-              getItemUrl({ item }: { item: ResolveSchema<SectionSchema> }) {
-                return item.pageRoute
-              },
-              templates
-            }
-          ]
-        } catch (e) {
-          // won't work in dev build mode, TODO a better error message here?
-          return []
-        }
+              return processed
+            },
+            getItemUrl({ item }: { item: ResolveSchema<SectionSchema> }) {
+              return item.pageRoute
+            },
+            templates
+          }
+        ]
       },
       render({ sections, render }, root) {
         render(
@@ -136,16 +116,12 @@ export default function SearchBar() {
           </>,
           root
         )
-      },
-      renderNoResults:
-        process.env.NODE_ENV === 'production'
-          ? undefined
-          : renderNotEnabledMessage
+      }
     })
     return () => {
       search.destroy()
     }
-  }, [isBrowser, siteConfig])
+  }, [isBrowser, siteConfig, indexData])
 
   useEffect(() => {
     colorMode === 'dark'
