@@ -120,13 +120,18 @@ async function retrieveDevIndex(
       pageRouteFactory
     )
   }
+
   const docs: Record<string, string>[] =
-    allContent['docusaurus-plugin-content-docs'].default.loadedVersions[0].docs
-  const blogs: Record<string, string>[] = allContent[
-    'docusaurus-plugin-content-blog'
-  ].default.blogPosts.map(({ metadata }: any) => metadata)
+    allContent['docusaurus-plugin-content-docs']?.default?.loadedVersions[0]
+      ?.docs ?? []
+
+  const blogs: Record<string, string>[] =
+    allContent['docusaurus-plugin-content-blog']?.default?.blogPosts?.map(
+      ({ metadata }: any) => metadata
+    ) ?? []
+
   const pages: Record<string, string>[] =
-    allContent['docusaurus-plugin-content-pages'].default
+    allContent['docusaurus-plugin-content-pages']?.default ?? []
 
   index.push(
     ...(await Promise.all(docs.map(indexGenerator))).flat(),
