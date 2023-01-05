@@ -1,53 +1,79 @@
 {
   "name": "@lyrasearch/plugin-docusaurus",
-  "version": "0.0.0",
-  "private": "true",
-  "workspaces": [
-    "plugin-docusaurus",
-    "website"
-  ],
+  "version": "0.0.0-beta.4",
+  "description": "Docusaurus plugin for local search powered by lyra",
+  "main": "lib/server/index.js",
+  "scripts": {
+    "build": "rm -rf lib && npm run build:client && npm run build:server && cp ./src/client/theme/SearchBar/search.css ./lib/client/theme/SearchBar/search.css && cp ./src/client/theme/SearchBar/styles.module.css ./lib/client/theme/SearchBar/styles.module.css",
+    "build:client": "tsc --project tsconfig.client.json ",
+    "build:server": "tsc --project tsconfig.server.json",
+    "watch:client": "tsc --watch --project tsconfig.client.json",
+    "watch:server": "tsc --watch --project tsconfig.server.json",
+    "test": "exit 0",
+    "lint": "eslint src"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lyrasearch/plugin-docusaurus.git"
   },
+  "files": [
+    "/translationMessages",
+    "/lib",
+    "/*.css",
+    "/README.md"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "lyra",
+    "docusaurus"
+  ],
+  "author": "",
   "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/lyrasearch/plugin-docusaurus/issues"
   },
   "homepage": "https://github.com/lyrasearch/plugin-docusaurus#readme",
   "devDependencies": {
-    "@commitlint/cli": "^17.1.2",
-    "@commitlint/config-conventional": "^17.1.0",
-    "eslint": "^8.25.0",
-    "eslint-config-prettier": "^8.5.0",
+    "@commitlint/cli": "^17.4.0",
+    "@commitlint/config-conventional": "^17.4.0",
+    "@docusaurus/module-type-aliases": "^2.2.0",
+    "@docusaurus/types": "^2.2.0",
+    "@types/node": "^18.11.17",
+    "@types/react": "^18.0.26",
+    "@types/react-dom": "^18.0.9",
+    "eslint": "^8.31.0",
+    "eslint-config-prettier": "^8.6.0",
     "eslint-config-react-app": "^7.0.1",
     "eslint-plugin-prettier": "^4.2.1",
-    "eslint-plugin-react": "^7.31.8",
-    "husky": "^8.0.1",
-    "lint-staged": "^13.0.3",
-    "prettier": "^2.7.1"
+    "eslint-plugin-react": "^7.31.11",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.1.0",
+    "prettier": "^2.8.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "typescript": "^4.9.4"
   },
-  "lint-staged": {
-    "*.{ts, tsx}": "eslint ./plugin-docusaurus --cache --fix"
+  "peerDependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
   },
-  "scripts": {
-    "prepare": "husky install && npm run build",
-    "lint": "eslint ./plugin-docusaurus",
-    "build": "pnpm -r --workspace-concurrency=1 run build",
-    "start": "pnpm --filter \"./plugin-docusaurus\" run build && pnpm -r run start",
-    "serve": "pnpm -r run serve",
-    "build-serve": "pnpm run build && pnpm run serve",
-    "test": "exit 0"
-
+  "dependencies": {
+    "@algolia/autocomplete-js": "^1.7.2",
+    "@algolia/autocomplete-theme-classic": "^1.7.3",
+    "@docusaurus/theme-common": "^2.2.0",
+    "@lyrasearch/lyra": "^0.3.1",
+    "@lyrasearch/plugin-match-highlight": "^0.0.3",
+    "@lyrasearch/plugin-parsedoc": "^0.0.5"
   },
   "pnpm": {
     "peerDependencyRules": {
       "ignoreMissing": [
+        "@algolia/client-search",
+        "algoliasearch",
         "typescript"
       ]
     }
-  },
-  "publishConfig": {
-    "directory": "plugin-docusaurus"
   }
 }

@@ -10,7 +10,7 @@ node_modules
 .DS_Store
 
 # Transpiled JavaScript
-plugin-docusaurus/lib
+lib
 
 # Test tmp files
 lyra-search-index.json
