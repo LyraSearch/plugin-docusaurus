@@ -24,6 +24,14 @@ on:
         description: "The commit message template"
         required: false
         default: "Release {version}"
+      prerelease:
+        description: "The prelease prefix"
+        required: false
+        default: "beta"
+        type: choice
+        options:
+          - alpha
+          - beta
   pull_request:
     types: [closed]
 
@@ -41,7 +49,9 @@ jobs:
           commit-message: ${{ github.event.inputs.commit-message }}
           semver: ${{ github.event.inputs.semver }}
           npm-tag: ${{ github.event.inputs.tag }}
-          prerelease-prefix: "beta"
+          prerelease-prefix: ${{ github.event.inputs.prerelease }}
+          version-prefix: ""
           build-command: |
             pnpm config set auto-install-peers true
             pnpm install --frozen-lockfile
+            pnpm run build
