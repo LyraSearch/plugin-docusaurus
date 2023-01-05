@@ -41,6 +41,7 @@ jobs:
           commit-message: ${{ github.event.inputs.commit-message }}
           semver: ${{ github.event.inputs.semver }}
           npm-tag: ${{ github.event.inputs.tag }}
+          prerelease-prefix: "beta"
           build-command: |
             pnpm config set auto-install-peers true
             pnpm install --frozen-lockfile
