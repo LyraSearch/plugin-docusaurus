@@ -1,6 +1,6 @@
 {
   "name": "@lyrasearch/plugin-docusaurus",
-  "version": "0.0.0-beta.5",
+  "version": "0.0.0-beta.6",
   "description": "Docusaurus plugin for local search powered by lyra",
   "main": "lib/server/index.js",
   "scripts": {
