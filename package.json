@@ -9,7 +9,8 @@
     "build:server": "tsc --project tsconfig.server.json",
     "watch:client": "tsc --watch --project tsconfig.client.json",
     "watch:server": "tsc --watch --project tsconfig.server.json",
-    "test": "exit 0"
+    "test": "exit 0",
+    "lint": "eslint src"
   },
   "repository": {
     "type": "git",
@@ -35,11 +36,21 @@
   },
   "homepage": "https://github.com/lyrasearch/plugin-docusaurus#readme",
   "devDependencies": {
+    "@commitlint/cli": "^17.4.0",
+    "@commitlint/config-conventional": "^17.4.0",
     "@docusaurus/module-type-aliases": "^2.2.0",
     "@docusaurus/types": "^2.2.0",
     "@types/node": "^18.11.17",
     "@types/react": "^18.0.26",
     "@types/react-dom": "^18.0.9",
+    "eslint": "^8.31.0",
+    "eslint-config-prettier": "^8.6.0",
+    "eslint-config-react-app": "^7.0.1",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-react": "^7.31.11",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.1.0",
+    "prettier": "^2.8.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "typescript": "^4.9.4"
