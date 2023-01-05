@@ -17,10 +17,9 @@
     "url": "git+https://github.com/lyrasearch/plugin-docusaurus.git"
   },
   "files": [
-    "/translationMessages",
-    "/lib",
-    "/*.css",
-    "/README.md"
+    "lib",
+    "translationMessages",
+    "README.md"
   ],
   "publishConfig": {
     "access": "public"
