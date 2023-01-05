@@ -6,15 +6,15 @@ import {
   SearchResultWithHighlight,
   searchWithHighlight
 } from '@lyrasearch/plugin-match-highlight'
+import { INDEX_FILE } from '../../../shared'
 import { SectionSchema } from '../../../types'
 
 let searchFn: (term: string) => SearchResultWithHighlight<SectionSchema>[]
 
-export const getLyraSearch = async (baseUrl: string) => {
+export const getLyraSearch = async (baseUrl: string, indexData?: any) => {
   if (!searchFn) {
-    const indexData = await (
-      await fetch(`${baseUrl}lyra-search-index.json`)
-    ).json()
+    indexData =
+      indexData || (await (await fetch(`${baseUrl}${INDEX_FILE}`)).json())
     const db = create<SectionSchema>({
       schema: {
         pageRoute: 'string',
@@ -26,8 +26,11 @@ export const getLyraSearch = async (baseUrl: string) => {
         afterInsert
       }
     }) as LyraWithHighlight<SectionSchema>
-    indexData.forEach((record: ResolveSchema<SectionSchema>) =>
-      insertWithHooks(db, record)
+    await Promise.all(
+      indexData.map(async (record: ResolveSchema<SectionSchema>) => {
+        record.pageRoute = `${baseUrl}${record.pageRoute}`
+        return insertWithHooks(db, record)
+      })
     )
     searchFn = (term: string) =>
       searchWithHighlight(db, { term, properties: '*' })
