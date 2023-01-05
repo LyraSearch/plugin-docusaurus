@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "private": "true",
   "workspaces": [
-    "website",
-    "plugin-docusaurus"
+    "plugin-docusaurus",
+    "website"
   ],
   "repository": {
     "type": "git",
@@ -33,10 +33,12 @@
   "scripts": {
     "prepare": "husky install && npm run build",
     "lint": "eslint ./plugin-docusaurus",
-    "build": "npm --prefix plugin-docusaurus run build && npm --prefix website run build",
-    "serve": "npm --prefix website run serve",
-    "build-serve": "npm run build && npm run serve",
+    "build": "pnpm -r --workspace-concurrency=1 run build",
+    "start": "pnpm --filter \"./plugin-docusaurus\" run build && pnpm -r run start",
+    "serve": "pnpm -r run serve",
+    "build-serve": "pnpm run build && pnpm run serve",
     "test": "exit 0"
+
   },
   "pnpm": {
     "peerDependencyRules": {

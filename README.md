@@ -30,15 +30,21 @@ be found in `./website` with the plugin configured.
 
 To test running the plugin locally run:
 
-```
-npm i
-cd website
-npm run build && npm run serve
+```bash
+pnpm i --frozen-lockfile
+pnpm run build-serve
 ```
 
 **Note** the plugin generates the search index in the `postBuild` lifecycle of docusaurus plugins. This only runs on production builds, not when running locally with a dev server. 
 
-In dev builds the search index is composed from the md files so MDX custom components may not be indexed properly.
+In dev builds the search index is composed from the md files so MDX custom components may not be indexed properly. 
+
+To test the plugin in dev mode run:
+
+```bash
+pnpm i --frozen-lockfile
+pnpm run start
+```
 
 # License
 
