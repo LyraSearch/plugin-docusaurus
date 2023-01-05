@@ -12,6 +12,7 @@ import { Footer } from './Footer'
 import { Position } from '@lyrasearch/plugin-match-highlight'
 import './search.css'
 import { usePluginData } from '@docusaurus/useGlobalData'
+import { PLUGIN_NAME } from '../../../shared'
 
 type Hit = ResolveSchema<SectionSchema> & { position: Position }
 
@@ -67,7 +68,7 @@ export default function SearchBar() {
   const { siteConfig } = useDocusaurusContext()
   const containerRef = useRef(null)
   const { colorMode } = useColorMode()
-  const indexData = usePluginData('@lyrasearch/plugin-docusaurus')
+  const indexData = usePluginData(PLUGIN_NAME)
 
   useEffect(() => {
     if (!containerRef.current || !isBrowser) {

@@ -7,9 +7,8 @@ import { create } from '@lyrasearch/lyra'
 import { SectionSchema } from '../types'
 import { ResolveSchema } from '@lyrasearch/lyra/dist/esm/src/types'
 import { defaultHtmlSchema } from '@lyrasearch/plugin-parsedoc'
+import { INDEX_FILE, PLUGIN_NAME } from '../shared'
 
-const PLUGIN_NAME = '@lyrasearch/plugin-docusaurus'
-const INDEX_FILE = 'lyra-search-index.json'
 const getThemePath = () => resolve(__dirname, '..', 'client', 'theme')
 const docusaurusLyraSearchPlugin = (
   docusaurusContext: LoadContext
@@ -30,8 +29,8 @@ const docusaurusLyraSearchPlugin = (
     const index = await retrieveDevIndex(allContent)
     await actions.setGlobalData(index)
   },
-  async postBuild({ outDir, baseUrl }) {
-    const index = await retrieveIndex(baseUrl, '**/*.html', pageRouteFactory)
+  async postBuild({ outDir }) {
+    const index = await retrieveIndex('**/*.html', pageRouteFactory)
     return writeIndex(outDir, index)
   }
 })
@@ -40,9 +39,8 @@ const docusaurusLyraSearchPlugin = (
 const importDynamic = new Function('modulePath', 'return import(modulePath)')
 
 async function retrieveIndex(
-  baseUrl: string,
   pattern: string,
-  pageRouteFactory: (baseUrl: string, id: string) => string
+  pageRouteFactory: (id: string) => string
 ): Promise<ResolveSchema<SectionSchema>[]> {
   const { defaultHtmlSchema, populateFromGlob } = await importDynamic(
     '@lyrasearch/plugin-parsedoc'
@@ -53,7 +51,7 @@ async function retrieveIndex(
   })
 
   return (Object.values(db.docs) as ResolveSchema<typeof defaultHtmlSchema>[])
-    .map(node => defaultToSectionSchema(node, baseUrl, pageRouteFactory))
+    .map(node => defaultToSectionSchema(node, pageRouteFactory))
     .filter(isIndexable)
 }
 
@@ -76,11 +74,10 @@ function transformFn(node: any) {
 
 function defaultToSectionSchema(
   node: ResolveSchema<typeof defaultHtmlSchema>,
-  baseUrl: string,
-  pageRouteFactory: (baseUrl: string, id: string) => string
+  pageRouteFactory: (id: string) => string
 ): ResolveSchema<SectionSchema> {
   const { id, content, type } = node
-  const pageRoute = pageRouteFactory(baseUrl, id)
+  const pageRoute = pageRouteFactory(id)
   const sectionTitle = (pageRoute.split('/').pop() ?? '')
     .replace(/(-)+/g, ' ')
     .split(' ')
@@ -95,8 +92,8 @@ function defaultToSectionSchema(
   }
 }
 
-function pageRouteFactory(baseUrl: string, id: string) {
-  return `${baseUrl}${id.split('/').slice(1, -2).join('/')}`
+function pageRouteFactory(id: string) {
+  return id.split('/').slice(1, -2).join('/')
 }
 
 function isIndexable(doc: ResolveSchema<SectionSchema>): boolean {
@@ -116,11 +113,9 @@ async function retrieveDevIndex(
     permalink,
     source
   }: Record<string, string>) => {
-    const pageRouteFactory = (baseUrl: string) =>
-      `${baseUrl}${permalink.slice(1)}`
+    const pageRouteFactory = () => permalink.slice(1)
 
     return retrieveIndex(
-      '/',
       `**${source.slice(source.indexOf('/'))}`,
       pageRouteFactory
     )
